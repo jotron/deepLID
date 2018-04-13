@@ -1,0 +1,13 @@
+<!doctype html>
+<!--HTML help found on w3schools.com-->
+<head>
+    <title>Flask app</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.WebRTC-Experiment.com/RecordRTC.js"></script>
+</head>
+<body>
+    <h1>deepLID - Demo</h1>
+    <button id="recorder">Start Recording</button>
+    <button id="uploader">Upload Recording</button>
+    <script src="{{ url_for('static', filename='record.js') }}"></script>
+</body>
