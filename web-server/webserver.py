@@ -1,4 +1,5 @@
 # using http://flask.pocoo.org/docs/0.12/
+# in order to record audio on IOS, https would be needed
 import os
 from flask import Flask, request, url_for, render_template
 

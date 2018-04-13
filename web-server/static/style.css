@@ -1,3 +1,14 @@
 h1 {
     color: blue
 }
+
+#bar {
+    margin-top: 5px;
+    width: 238px;
+    background-color: lightgrey;
+}
+#progress {
+    width: 1%;
+    height: 14px;
+    background-color: green;
+}

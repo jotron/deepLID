@@ -1,6 +1,5 @@
 // using https://github.com/muaz-khan/RecordRTC
 // to post https://github.com/muaz-khan/WebRTC-Experiment/issues/48
-// open issues: progress bar
 (function() {
 
     var recorder = document.getElementById("recorder");
@@ -15,6 +14,7 @@
     //Recording
     recorder.onclick = function() {
         var mediaConstraints = { video: false, audio: true };
+        uploader.disabled = true;
 
         navigator.mediaDevices.getUserMedia(mediaConstraints)
         .then(function(stream) {
@@ -28,7 +28,7 @@
                     formData.append('file', blob);
                     uploader.disabled = false;
             })
-
+            progress_move();
             recordRTC.startRecording();
         })
         .catch(function(error) {console.log(error)});
@@ -41,20 +41,19 @@
         xhr.send(formData);
     }
 
-})();
-
-
-/*function record(stream) {
-    var recordRTC = RecordRTC(stream, { type: 'audio' });
-    recordRTC.setRecordingDuration(5 * 1000).onRecordingStopped(function(url) {
-            //console.debug('setRecordingDuration', url);
-            window.open(url);
-        })
-    recordRTC.startRecording();
+    //progress bar
+    function progress_move() {
+        var elem = document.getElementById("progress");
+        var width = 1;
+        var id = setInterval(frame, 10);
+        function frame() {
+            if (width >= 100) {
+                clearInterval(id);
+            } else {
+                width += 1/5;
+                elem.style.width = width + '%';
+            }
+        }
 }
-function activate() {
-    var mediaConstraints = { video: false, audio: true };
-    navigator.mediaDevices.getUserMedia(mediaConstraints).then(record).catch(function(error) {
-        console.log("Error, perhaps an other application is using it");
-    });
-}*/
+
+})();

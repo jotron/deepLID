@@ -1,5 +1,6 @@
 <!doctype html>
 <!--HTML help found on w3schools.com-->
+<!--prgress bar: https://www.w3schools.com/howto/howto_js_progressbar.asp-->
 <head>
     <title>Flask app</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
@@ -9,5 +10,8 @@
     <h1>deepLID - Demo</h1>
     <button id="recorder">Start Recording</button>
     <button id="uploader">Upload Recording</button>
+    <div id="bar">
+        <div id="progress"></div>
+    </div>
     <script src="{{ url_for('static', filename='record.js') }}"></script>
 </body>
