@@ -32,17 +32,18 @@ regex = '(?<=<a href=").+tgz(?=">)'
 
 
 # helper function to unpack only .wav files
-def wav_files(members):
+def wav_files(members, source_name):
     for tarinfo in members:
         if os.path.splitext(tarinfo.name)[1] == ".wav":
-            tarinfo.name = os.path.basename(tarinfo.name)
+            tarinfo.name = source_name + '-' + os.path.basename(tarinfo.name)
             yield tarinfo
 
 
 # unpack tgz archives
 def process(archive, lang):
+    source_name = 'n' + os.path.splitext(os.path.basename(archive))[0]
     tar = tarfile.open(archive, 'r:gz')
-    tar.extractall(lang, members=wav_files(tar))
+    tar.extractall(lang, members=wav_files(tar, source_name))
     tar.close()
     os.remove(archive)
 
