@@ -4,30 +4,24 @@
 
 *as in 'Deep learning with Python' Chapter 4.5*
 
-### Definition
+**Input_data:** Audio files from Voxforge, Youtube etc.
 
-**Input_data: ** Audio files from Voxforge, Youtube etc.
-
-**Target: ** Language, either german, french or english
+**Target:** Language label, either german, french or english
 
 → **Type:** Multiclass classification
 
-### Evaluation 
+## Repo Structure
 
-**Measure of success:** Accuracy (using balanced data)
-
-**Evaluation protocol:** Maintaining a hold-out validation set (data is split in training_data, validation_data and test_data)
-
-### Preprocessing
-
-- Spectrograms?
-- Normalization?
-
-### Model ideas
-
-**Last-layer activation: ** softmax (useful for probability, sum(last_layer) = 1)
-
-**Loss function:** categorical_crossentropy
+- **/data**
+  - Script to download training data from Voxforge
+  - Jupyter notebook with data analysis
+- **/preprocessing**
+  - Description of methods, see [preprocessing/README](preprocessing/README.md)
+  - Scripts to preprocess data
+- **/models**
+  - Description of used models, see [models/README](models/README.md)
+  - **Jupyter notebooks with training/evaluation data**
+  - Saved models
 
 ## Dataset 
 
@@ -36,6 +30,10 @@ Number of *.wav* files per languange in datasets.
 |              | English | German | French |
 | ------------ | ------- | ------ | ------ |
 | **Voxforge** | 86'616  | 24'100 | 22'430 |
+
+##### To download files 
+
+```python data/download_data.py <language>```
 
 ## Running the Webserver
 
