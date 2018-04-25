@@ -18,9 +18,11 @@
 
         navigator.mediaDevices.getUserMedia(mediaConstraints)
         .then(function(stream) {
-            var recordRTC = RecordRTC(stream, { type: 'audio' });
+            var recordRTC = RecordRTC(stream, { type: 'audio',
+                                                numberOfAudioChannels: 1,
+                                                desiredSampleRate: 16000});
 
-            recordRTC.setRecordingDuration(5 * 1000)
+            recordRTC.setRecordingDuration(6 * 1000)
             .onRecordingStopped(function(url) {
                     //console.debug('setRecordingDuration', url);
                     //window.open(url);
@@ -39,6 +41,11 @@
         var xhr = new XMLHttpRequest();
         xhr.open('POST', "/", true);
         xhr.send(formData);
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("pred_container").innerHTML = this.responseText;
+            }
+        };
     }
 
     //progress bar

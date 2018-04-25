@@ -1,5 +1,7 @@
 # deepLID
 
+Online Demo at *https://jo.guru.xxx:5042* ;)
+
 ## Problem description
 
 *as in 'Deep learning with Python' Chapter 4.5*
@@ -38,9 +40,8 @@ Number of *.wav* files per languange in datasets.
 ## Running the Webserver
 
 ```bash
-# install flask
+# install flask, keras, tensorflow, numpy, etc.
 cd web-server
-export FLASK_APP=webserver.py
-flask run
+python webserver.py
 ```
 

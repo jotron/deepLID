@@ -2,7 +2,7 @@
 <!--HTML help found on w3schools.com-->
 <!--prgress bar: https://www.w3schools.com/howto/howto_js_progressbar.asp-->
 <head>
-    <title>Flask app</title>
+    <title>deepLID</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="https://cdn.WebRTC-Experiment.com/RecordRTC.js"></script>
 </head>
@@ -12,6 +12,8 @@
     <button id="uploader">Upload Recording</button>
     <div id="bar">
         <div id="progress"></div>
+    </div>
+    <div id="pred_container">
     </div>
     <script src="{{ url_for('static', filename='record.js') }}"></script>
 </body>

@@ -12,3 +12,13 @@ h1 {
     height: 14px;
     background-color: green;
 }
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 15px;
+}
+
+#pred_container {
+    margin-top: 5px;
+}
