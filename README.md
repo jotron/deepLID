@@ -40,8 +40,12 @@ Number of *.wav* files per languange in datasets.
 ## Running the Webserver
 
 ```bash
-# install flask, keras, tensorflow, numpy, etc.
-cd web-server
-python webserver.py
+git clone https://github.com/jotron/deepLID.git
+cd deepLID
+
+pip install pipenv
+pipenv install
+
+python web-server/webserver.py
 ```
 
