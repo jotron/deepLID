@@ -1,6 +1,6 @@
 # deepLID
 
-Online Demo at *https://jo.guru.xxx:5042* ;)
+Online Demo at *https://jo.guru.xxx/deeplid*
 
 ## Problem description
 
@@ -46,6 +46,6 @@ cd deepLID
 pip install pipenv
 pipenv install
 
-python web-server/webserver.py
+pipenv run python web-server/webserver.py
 ```
 

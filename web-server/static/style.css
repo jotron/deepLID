@@ -13,6 +13,10 @@ h1 {
     background-color: green;
 }
 
+audio {
+    margin-top: 5px;
+}
+
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;

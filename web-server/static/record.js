@@ -7,6 +7,7 @@
     // get elements from webpage
     var recorder = document.getElementById("recorder"); // start record
     var uploader = document.getElementById("uploader"); // upload record
+    var progress_bar = document.getElementById("progress"); // progress bar
 
     //disable upload button as long as no recording present
     uploader.disabled = true;
@@ -35,11 +36,13 @@
             // set duration of recording 5s
             recordRTC.setRecordingDuration(5 * 1000)
             .onRecordingStopped(function(url) {
-                    //console.debug('setRecordingDuration', url);
-                    //window.open(url);
                     blob = recordRTC.getBlob();
                     formData.append('file', blob);
                     uploader.disabled = false;
+
+                    // insert recording after progress bar
+                    var audio_element = '<audio src="' + url + '" controls></audio>';
+                    progress_bar.parentElement.insertAdjacentHTML('afterend', audio_element);
             })
 
             // start recording request
@@ -66,7 +69,6 @@
 
     //Animate progress bar
     function progress_move() {
-        var elem = document.getElementById("progress");
         var width = 0; // start: 0%
         var id = setInterval(frame, 10); // every 10ms add 1/5% => total 5s
         function frame() {
@@ -74,7 +76,7 @@
                 clearInterval(id);
             } else {
                 width += 1/5;
-                elem.style.width = width + '%';
+                progress_bar.style.width = width + '%';
             }
         }
 }
