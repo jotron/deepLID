@@ -33,8 +33,8 @@
                                                 numberOfAudioChannels: 1,
                                                 desiredSampleRate: 16000,
                                                 onAudioProcessStarted: progress_move()});
-            // set duration of recording 5s
-            recordRTC.setRecordingDuration(5 * 1000)
+            // set duration of recording 5s (6s)
+            recordRTC.setRecordingDuration(6 * 1000)
             .onRecordingStopped(function(url) {
                     blob = recordRTC.getBlob();
                     formData.append('file', blob);
@@ -75,7 +75,7 @@
             if (width >= 100) {
                 clearInterval(id);
             } else {
-                width += 1/5;
+                width += 1/6;
                 progress_bar.style.width = width + '%';
             }
         }

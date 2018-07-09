@@ -1,0 +1,11 @@
+{
+    "uid": "deeplid",
+    "append": true,
+    "watch": true,
+    "command": "pipenv run python",
+    "script": "webserver.py",
+    "sourceDir": "/home/joel/deepLID/web-server",
+    "colors": true,
+    "killTree": true,
+    "LOGFILE": "deeplog.log"
+}

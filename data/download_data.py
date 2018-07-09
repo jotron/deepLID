@@ -1,7 +1,12 @@
+# HTTP
 import requests
+# Regular expressions
 import re
+# Command-line arguments
 import argparse
+# File operations
 import os
+# unzip
 import tarfile
 
 # https://docs.python.org/2/howto/regex.html
@@ -60,9 +65,9 @@ def download(lang):
 
     # get filenames
     site_url = language_urls[lang]
-    site = requests.get(site_url).text # html string
-    file_names = re.findall(regex, site) # array
-    num_files = len(file_names) # number of files
+    site = requests.get(site_url).text  # returns html string
+    file_names = re.findall(regex, site)  # returns array
+    num_files = len(file_names)  # returns number of files
 
     for i, filename in enumerate(file_names):
 

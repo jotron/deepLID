@@ -2,3 +2,12 @@ __pycache__/
 *.wav
 .ipynb_checkpoints/
 *.npy
+
+# Latex
+*.aux
+*.bbl
+*.blg
+*.log
+*.lof
+*.synctex.gz
+*.toc
