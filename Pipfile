@@ -12,6 +12,7 @@ tensorflow = "==1.5"
 librosa = "*"
 kapre = "*"
 soundfile = "*"
+ipykernel = "*"
 
 [requires]
 python_version = "3.5"
