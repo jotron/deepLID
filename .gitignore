@@ -11,3 +11,6 @@ __pycache__/
 *.lof
 *.synctex.gz
 *.toc
+
+# Copyright material
+document/references/*

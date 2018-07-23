@@ -1,4 +1,10 @@
-\documentclass{article}
+\documentclass[12pt,twoside]{article}
+\usepackage[a4paper,width=150mm,top=25mm,bottom=25mm, bindingoffset=6mm]{geometry}
+%\usepackage{fancyhdr}
+%\pagestyle{fancy}
+
+\usepackage[]{biblatex}
+\addbibresource{sources.bib}
 
 \usepackage{listings}
 \usepackage{graphicx} 
@@ -20,32 +26,28 @@
 \date{\today{}}
 
 \begin{document}
-	\maketitle
-	\newpage
-	\tableofcontents
 	
-	\section{Abstract}
+	\input{cover}
+	
+	\tableofcontents
+	\newpage
+	
 	\section{Einleitung}
-	\section{Methoden}
-	\subsection{Künstliche Neuronale Netze}
-	\subsection{Deep learning}
-	\subsubsection{Convolutional Neural Networks}
-	\subsubsection{Recurrent Neural Networks}
-	\subsubsection{[andere Tricks]}
-	\subsection{Bibliotheken}
-	\subsubsection{Numpy}
-	\subsubsection{Matplotlib}
-	\subsubsection{Keras}
-	\subsubsection{Flask}
+	\include{deeplearning}
+	\section{Daten}
+	\subsection{Daten Auswahl}
 	\subsection{Audio Signal Processing}
 	\section{Resultate}
-	\subsection{Daten}
 	\subsection{Modelle}
 	\subsection{Web Interface}
 	\section{Diskussion}
 	\subsection{Ausbaumöglichkeiten}
+	\section{Bibliotheken}
+	\subsection{Numpy}
+	\subsection{Matplotlib}
+	\subsection{Keras}
+	\subsection{Flask}
 	
+	\printbibliography
 	\listoffigures
-	\bibliographystyle{plain}
-	\bibliography{sources}
 \end{document}
