@@ -6,6 +6,9 @@
 \usepackage[]{biblatex}
 \addbibresource{sources.bib}
 
+\usepackage{caption}
+\usepackage{subcaption}
+
 \usepackage{listings}
 \usepackage{graphicx} 
 \usepackage[ngerman]{babel}
@@ -34,19 +37,12 @@
 	
 	\section{Einleitung}
 	\include{deeplearning}
-	\section{Daten}
-	\subsection{Daten Auswahl}
-	\subsection{Audio Signal Processing}
+	\include{daten}
+	\include{webinterface}
 	\section{Resultate}
-	\subsection{Modelle}
-	\subsection{Web Interface}
 	\section{Diskussion}
 	\subsection{Ausbaumöglichkeiten}
-	\section{Bibliotheken}
-	\subsection{Numpy}
-	\subsection{Matplotlib}
-	\subsection{Keras}
-	\subsection{Flask}
+	\include{code}
 	
 	\printbibliography
 	\listoffigures

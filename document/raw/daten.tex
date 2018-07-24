@@ -1,0 +1,49 @@
+\section{Daten}
+
+
+\subsection{Daten Auswahl}
+Es gibt keine frei zugänglichen umfassenden Datasets für Sprachidentifikations-Aufgaben. Datensets wie das \textit{NIST Language Recognition Evaluation}\cite{nist} sind nur unter teuren Gebühren zugänglich. Wie verwandte Arbeiten empfehlen \cite{iLID}, wird darum ein eigenes Datenset zusammengestellt. Es werden gleichmässig Daten zu den Sprachen Deutsch, Englisch, und Französisch gesammelt. Die Daten stammen einerseits vom \textit{Voxforge}\cite{voxforge} Datenset und von \textit{Youtube}\cite{youtube}.
+
+\paragraph{Voxforge} ist ein open-source Datenset für die Spracherkennung. Es besteh aus vielen kurzen (1-10s), von Benutzern hochgeladenen, Audiodateien. Die englische Sprache dominiert mit rund 120h Audio das Datenset. Insgesamt kommen 190h Aufnahme zusammen. Die Audioqualität variiert je nach Benutzer.
+
+Die Sprache ist langsam und deutlich verständlich. Sie hört sich eher künstlich an, im Vergleich zu einem natürlichem Gespräch.
+
+\paragraph{Youtube}dient als Quelle für natürlichere Sprache. Es werden Nachrichtenkanäle wie CNN, ARD, etc. verwendet. Die Sendungen haben den Vorteil, dass oft fremde Gäste eingeladen werden, was zu einer grossen Variation der Sprecher führt. Ausserdem kommen oft natürliche Hintergrundgeräusche dazu. Zum Schluss ist die Datenmenge die hier erhältlich ist praktisch unbeschränkt gross.
+
+\begin{table}[h]
+    \begin{subtable}[t ]{0.45\textwidth}
+        \centering
+        \begin{tabular}[t]{l || c c}
+        Sprache & Voxforge & Youtube \\
+        \hline \hline
+        Französisch & 20h & 50h\\
+        Deutsch & 22h & 60h\\
+        Englisch & 23h & 200h\\
+        \end{tabular}
+        \caption{Verteilung der Datenmenge}
+        \label{tab:amount}
+    \end{subtable}
+    \hfill
+    \begin{subtable}[t ]{0.45\textwidth}
+        \centering
+        \begin{tabular}[t]{l || l}
+        Sprache & Kanäle \\
+        \hline \hline
+        Französisch & France24, FranceInfo\\
+        Deutsch & ARD, ZDF\\
+        Englisch & CNN,  BBC
+        \end{tabular}
+        \caption{Youtube Kanäle}
+        \label{tab:channels}
+    \end{subtable}
+    \caption{Daten Auswahl}
+    \label{tab:data}
+\end{table}
+
+
+\subsection{Daten Split}
+Zu grosse Datenmengen sind für das Training problematisch. Sie sind technisch aufwendig und sehr langsam in der Verarbeitung. Zudem ist es immer das Ziel eines Algorithmus, mit möglichst wenigen Daten auszukommen. Darum wird das Datenset auf 40'000 Stücke reduziert, was ungefähr 56h insgesamt ausmacht. Die Daten stammen zufällig zu gleichen Teilen sowohl aus Youtube wie aus Voxforge. Die einzelnen Sprachen sind ebenfalls genau gleichrangig repräsentiert.
+
+Das kleine Datenset wird wiederum in \textit{Trainingset}, \textit{Validationset}, und \textit{Testset} aufgeteilt zu den Anteilen 70\%, 20\% und 10\%. Das \textit{Trainingset} wird, wie der Name preisgibt, für das Training verwendet. Das \textit{Validationset} wird verwendet um zu beobachten, wie das Modell auf neue Daten reagiert. Die \textit{Hyperparamter} (Parameter die das Netzwerk nicht selber lernen kann, z.B die Anzahl Knoten) werden manuell so angepasst dass das Netzwerk möglichst gut auf dem \textit{Validationset} abschneidet. Zuletzt wird das \textit{Testset} in Betracht gezogen, um die Leistung auf gänzlich neue Daten zu erforschen.
+
+\subsection{Preprocessing}
