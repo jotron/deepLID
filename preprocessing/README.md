@@ -1,10 +1,26 @@
 ## Preprocessing
 
-1. Split in overlapping 5s pieces, discard files with duration <2s
-2. Create Spectrogramms
-3. Truncate Frequences above 10kHz
-4. Mel filtering
-5. Width 600px (height 39px)
+**Goal: ** Split all samples in 5s pieces (padding up to 1.5s). Save all pieces in big Dataset ready for training.
 
-→ Source: [Language Identification in Audio Files](https://github.com/twerkmeister/iLID/blob/master/Deep%20Audio%20Paper%20Thomas%20Werkmeister%2C%20Tom%20Herold.pdf)
+### Distribution of processed data in *data\_100.hdf5*
 
+TOTAL = 100'000 [5s samples]
+
+#### By Split (80%, 10%, 10%)
+
+- 80'000 Training
+- 10'000 Validation
+- 10'000 Test
+
+#### By Language (1/3, 1/3, 1/3)
+
+- 33'333 EN
+- 33'333 FR
+- 33'333 DE
+
+#### By Source (50%, 50%)
+
+- 50'000 Youtube
+- 50'000 Voxforge
+
+### 

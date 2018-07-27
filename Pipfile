@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [dev-packages]
+youtube-dl = "*"
 
 [packages]
 flask = "*"
@@ -13,6 +14,7 @@ librosa = "*"
 kapre = "*"
 soundfile = "*"
 ipykernel = "*"
+seaborn = "*"
 
 [requires]
 python_version = "3.5"

@@ -15,27 +15,17 @@ Online Demo at *https://jo.guru.xxx/deeplid*
 ## Repo Structure
 
 - **/data**
-  - Script to download training data from Voxforge
-  - Jupyter notebook with data analysis
+  - see [data/README](data/README.md)
+  - Scripts to download data
 - **/preprocessing**
-  - Description of methods, see [preprocessing/README](preprocessing/README.md)
+  - see [preprocessing/README](preprocessing/README.md)
   - Scripts to preprocess data
+  - Jupyter notebook with data analysis
 - **/models**
   - Description of used models, see [models/README](models/README.md)
   - **Jupyter notebooks with training/evaluation data**
   - Saved models
 
-## Dataset 
-
-Number of *.wav* files per languange in datasets.
-
-|              | English | German | French |
-| ------------ | ------- | ------ | ------ |
-| **Voxforge** | 86'616  | 24'100 | 22'430 |
-
-##### To download files 
-
-```python data/download_data.py <language>```
 
 ## Running the Webserver
 

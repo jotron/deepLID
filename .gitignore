@@ -2,6 +2,7 @@ __pycache__/
 *.wav
 .ipynb_checkpoints/
 *.npy
+*.hdf5
 
 # Latex
 *.aux
@@ -11,6 +12,8 @@ __pycache__/
 *.lof
 *.synctex.gz
 *.toc
+*.xml
+*.bcf
 
 # Copyright material
 document/references/*
