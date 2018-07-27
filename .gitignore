@@ -12,7 +12,7 @@ __pycache__/
 *.lof
 *.synctex.gz
 *.toc
-*.xml
+*.run.xml
 *.bcf
 
 # Copyright material

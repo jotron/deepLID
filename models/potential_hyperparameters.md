@@ -34,6 +34,9 @@
 - Normalization
   -  Normalize every sample independently?
 - Mel-Spectrograms or Raw
+- Data augmentation
+  - → shift frequence?
+  - → split differently?
 
 ## Other
 
@@ -41,3 +44,4 @@
 
 - Adaptive Learning rate
 - Transfer Learning
+- One-to-One multi-class classification
