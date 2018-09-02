@@ -74,67 +74,27 @@ def get_sample_pointers(path, min_duration=3.5, sample_duration=5, margin=0):
     return sample_pointers
                         
 # returns actual samples
-def get_samples(sample_pointers, path, sample_duration=5*16000):
+def make_samples(sample_pointers, input_path, total_output_path, sample_duration=5*16000):
     
     # all files
     print("function call")
-    paths = get_paths(path)
+    paths = get_paths(input_path)
     print("got paths")
-    
-    # all samples, labels
-    samples = np.zeros((len(sample_pointers), sample_duration))
     
     # all pointers
     for i, pointer in enumerate(sample_pointers):
+        
+         # all samples, labels
+        sample = np.zeros((1, sample_duration))
         
         file = paths[pointer[0]]
         file_start = pointer[1]
 
         part, sr = librosa.load(file, sr=16000, offset=file_start, duration=5.0)
-        samples[i,:len(part)] = part
-        #print(i)
+        sample[0,:len(part)] = part
         
-    return samples
+        if not os.path.exists(total_output_path):
+            os.makedirs(total_output_path)
+        np.save(os.path.join(total_output_path, os.path.basename(file))+ str(file_start), sample)
 
-def get_split(path, lang_index, num_training, num_validation, num_test, margin=0, min_duration=3.5):
-    
-    # relation
-    division1 = num_training/(num_training+num_validation+num_test)
-    division2 = (num_training+num_validation)/(num_training+num_validation+num_test)
-    
-    # Choice of samples
-    print("pointers...")
-    pointers = get_sample_pointers(path, min_duration=min_duration, margin=margin)
-    train_pool, val_pool, test_pool = np.split(pointers, [int(len(pointers)*division1), int(len(pointers)*division2)])
-
-    train_choice = np.random.choice(len(train_pool), num_training)
-    val_choice = np.random.choice(len(val_pool), num_validation)
-    test_choice = np.random.choice(len(test_pool), num_test)
-    
-    train_pointers = train_pool[train_choice]
-    val_pointers = val_pool[val_choice]
-    test_pointers = test_pool[test_choice]
-
-    # Numpy arrays filled with samples
-    print("samples...")
-    train_data = get_samples(train_pointers, path)
-    val_data = get_samples(val_pointers, path)
-    test_data = get_samples(test_pointers, path)
-
-    # labels
-    train_labels = np.zeros((num_training, 3), dtype='float32')
-    train_labels[:, lang_index] = 1.0
-    
-    val_labels = np.zeros((num_validation, 3), dtype='float32')
-    val_labels[:, lang_index] = 1.0
-    
-    test_labels = np.zeros((num_test, 3), dtype='float32')
-    test_labels[:, lang_index] = 1.0
-    
-    return train_data, train_labels, val_data, val_labels, test_data, test_labels
-
-def compute_partitions(x, y):
-    part = np.full((y), int(x//y), dtype='int32')
-    part[-1] = int(x - ((y-1)*(x//y)))
-    return part
       
