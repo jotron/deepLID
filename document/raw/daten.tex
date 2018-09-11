@@ -50,11 +50,11 @@ Das Datenset wird wiederum in \textit{Trainingset}, \textit{Validationset}, und 
 Sprache besteht aus Wörtern und Wörter sind grundsätzlich eine Abfolge von Lauten. Verschiedene Sprachen unterscheiden sich an den verschiedenen Abfolgen von Lauten, manchmal sogar an den verwendeten Lauten selbst. Die kleinste relevante Einheit für Spracherkennung, sowohl für den Menschen wie die Maschine, ist also ein Laut.
 
 Wenn der Computer mit dem Mikrofon aufnimmt, misst er kleinste Druckunterschiede, bzw. Schallwellen. Eine unkomprimierte Audiodatei zeigt den Schalldruck über die Länge der Aufnahme, siehe Abbildung \ref{img:preprocessing} \textit{(oben)}.
-Die einzelne Schallwelle ist für den Menschen nicht erkennbar, deshalb ist sie auch für die Sprache von keiner Bedeutung. Erst mehrere Schallwellen, bzw. die daraus folgende Frequenz lässt sich als Laut hören. [siehe KAMBOR]
+Die einzelne Schallwelle ist für den Menschen nicht erkennbar, deshalb ist sie auch für die Sprache von keiner Bedeutung. Erst mehrere Schallwellen, bzw. die daraus folgende Frequenz lässt sich als Laut hören. 
 
-Das Verfahren um aus einer Schallwelle die unterschiedlichen Frequenzen zu bestimmen heisst \textit{Fourier-Transformation} \cite{fourrier}. Das Neuronale Netz müsste dieses Verfahren erlernen um dann aus den Lauten die Sprache erkennen zu können. Allerdings ist die Fourrier Transformation sehr komplex und fordert den Computer darum viel. Um dem Algorithmus die Aufgabe zu erleichtern kann man ihm darum als Eingabe die berechneten Laute geben anstatt der rohen Schallwelle.
+Das Verfahren um aus einer Schallwelle die unterschiedlichen Frequenzen zu bestimmen heisst \textit{Fourier-Transformation} \cite{fourrier}. Das Neuronale Netz müsste dieses Verfahren erlernen um dann aus den Lauten die Sprache erkennen zu können. Allerdings ist die Fourrier-Transformation sehr komplex und fordert den Computer darum viel. Um dem Algorithmus die Aufgabe zu erleichtern kann man ihm darum als Eingabe die berechneten Laute geben anstatt der rohen Schallwelle.
 
-Die Prozedur dem Algorithmus bereits vorgerechnete Werte zu füttern, heisst \textit{Preprocessing} und ist weit verbreitet im Feld von \textit{Machine learning} Feld. Das vorrechnen ist unter dem Namen \textit{Feature engineering} bekannt. \textit{Features}, also Merkmale z.b Laute werden aus den Rohen Daten extrahiert. \parencite[vgl.][]{chollet}
+Die Prozedur dem Algorithmus bereits vorgerechnete Werte zu füttern, heisst \textit{Preprocessing} und ist weit verbreitet im Feld von \textit{Machine learning}. Das vorrechnen ist unter dem Namen \textit{Feature engineering} bekannt. \textit{Features}, also Merkmale z.b Laute werden aus den Rohen Daten extrahiert. \parencite[vgl.][]{chollet}
 
 \subsubsection{Spektrogramme}
 \begin{figure}[hbt]
@@ -67,5 +67,23 @@ Die Prozedur dem Algorithmus bereits vorgerechnete Werte zu füttern, heisst \te
 		     Log-power Spectrogramm, 
 		     \textit{(unten)} Mel Spectrogramm}
 	\label{img:preprocessing}
+\end{figure}
+Spektrogramme sind grafische Darstellungen eines Hörsignals nach der Anwendung der Fourrier-Transformation\parencite[]['Spectrograms']{fourrier}, ersichtlich in Abbildung \ref{img:preprocessing} \textit{(Mitte)}. Frequenzen über 10kHz können abgeschnitten werden, da menschliche Sprache übermässig darunter abläuft\parencite{tenkHz}. Im Spektrogramm lassen sich von Auge Muster erkennen und unterscheiden. Der visuelle Charakter der Spektrogramme erlaubt ausserdem das verwenden von \textit{Convolution Neural Networks}.
+
+\subsubsection{Mel Filtering}
+
+Spektrogramme haben relativ viele Datenpunkte und sind deshalb recht aufwändig verarbeiten. Ein weiter \textit{preprocessing} Schritt wird deshalb oft angewendet: \textit{Mel Filtering}\parencite{mel}. Die Frequenzen werden dabei in grössere Eimer gepackt. Unter 1kHz sind die Eimer linear verteilt und darüber logarithmisch, siehe Abbildung \ref{img:preprocessing} \textit{(unten)}. Das Modell entspricht unserer Hörfähigkeit, die recht präzise unter 1kHz arbeitet, höhere Frequenzen aber schlecht unterscheiden kann\parencite{tenkHz}. 
+
+\subsubsection{Implementation}
+
+Die Oben genannten Transformationen können vor dem Training direkt auf die Daten angewendet und abgespeichert werden. In diesem Fall hätte man die rohen Daten löschen können. Allerdings sollte in dieser Arbeit sowohl an den rohen Daten wie auch an der Transformation flexibel experimentiert werden können, weswegen die Daten unbedingt beibehalten werden mussten. 
+
+Anstatt die Transformationen selber zu implementieren wird ein Framework verwendet. In diesem Fall bietet sich an \textit{kapre}\parencite{kapre} an. Mit Kapre lassen sich währende dem Training die Daten in echtzeit verarbeiten. Das Training dauert dabei aber 20\% länger. Konkret verhält sich \textit{kapre} wie eine Schicht vor dem eigentlichen Neuralen Netzwerk.
+\begin{figure}[hbt]
+	\centering
+		\includegraphics[width=0.6\textwidth]{assets/kapre.png}
+	\centering
+	\caption{\textit{Kapre}\parencite{kapre} as a layer}
+	\label{img:kapre}
 \end{figure}
 
