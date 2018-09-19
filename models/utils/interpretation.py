@@ -54,7 +54,8 @@ def confusion_matrix_plot(one_hot_y_pred, one_hot_y_tar,
     plot(cnf_matrix_abs, 1, fmt='d')
     plot(cnf_matrix_norm, 2, title="Normalized " + title, fmt='.2f')
     
-def random_listening(data, pred, labels, size=5, classes=["FR", "EN", "DE"]):
+def random_listening(data, labels, pred=-1, size=5, classes=["FR", "EN", "DE"]):
+    pred = np.zeros((len(data), len(classes)))
     choice = np.random.choice(len(data), size)
     for i in choice:
         sample = data[i]
