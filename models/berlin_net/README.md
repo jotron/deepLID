@@ -26,4 +26,5 @@
 | Dropout?                             | [a18](https://www.comet.ml/jotron/berlinnetmelbn/a188a189ff614e1bab7df68d111f0c23), [4f2](https://www.comet.ml/jotron/berlinnetmelbn/4f210604c8c34a97824334954d076393), [420](https://www.comet.ml/jotron/berlinnetmelbn/420f08900e3b4660888069d4d77587ad) | 92.0%, 0.25 with 0.3 Dropout  |
 | Normalization2D?                     | [c19](https://www.comet.ml/jotron/berlinnetmelbn/c1968adb64124dbfa8ad01ac7a9f9928), [93c](https://www.comet.ml/jotron/berlinnetmelbn/93cb2e51239c4fd791c27a24659d073b) | 89.3%                         |
 | Additive Noise?                      | [2c6](https://www.comet.ml/jotron/berlinnetmelbn/2c695397dc9849568428c0c7de311ee5), [cd9](https://www.comet.ml/jotron/berlinnetmelbn/cd9bc3dbd2c144719b28d83014bd6c5a), | 89%                           |
+| more n_mels?                         | [265](https://www.comet.ml/jotron/berlinnetmelbn/2656d55eb5214518b79542cc040f52ff), [c8b](https://www.comet.ml/jotron/berlinnetmelbn/c8b1aebb0ced419ab6350c9d35422185) | 90%                           |
 

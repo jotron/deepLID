@@ -18,10 +18,10 @@ np.random.seed(42)
 
 # monitoring
 experiment = Experiment(api_key="P9qHCZEUF514fowP4zfVDbGBl",
-                        project_name="BerlinNetMelBn", workspace="jotron")
+                        project_name="conv_2d_to_1d", workspace="jotron")
 
 callback_stopearly = keras.callbacks.EarlyStopping(monitor='val_acc',
-                                                   patience=5)
+                                                   patience=4)
 
 
 data_path = '../preprocessing/preprocessed_data'
@@ -31,7 +31,7 @@ val_data, val_labels = DataFeed.Dataset.create(data_path, ['val/youtube', 'val/v
 
 model = models.Sequential()
 model.add(Melspectrogram(n_dft=512, input_shape=(1, 5 * 16000,),
-                         padding='same', sr=16000, n_mels=39,
+                         padding='same', sr=16000, n_mels=28,
                          fmin=0.0, fmax=10000, power_melgram=1.0,
                          return_decibel_melgram=False, trainable_fb=False,
                          trainable_kernel=False))
@@ -41,12 +41,12 @@ model.add(layers.Conv2D(64, (3, 3), activation='relu'))
 model.add(layers.MaxPooling2D((2, 2)))
 model.add(layers.Conv2D(128, (3, 3), activation='relu'))
 model.add(layers.MaxPooling2D((2, 2)))
-model.add(layers.Dropout(0.3))
+model.add(layers.Reshape((-1, 1)))
+model.add(layers.Conv1D(16, 16, activation='relu'))
 model.add(layers.Flatten())
-model.add(layers.Dense(1048, activation='relu'))
 model.add(layers.Dense(3, activation='softmax'))
 
-model.compile(optimizer=RMSprop(lr=0.002),
+model.compile(optimizer=RMSprop(),
               metrics=['accuracy'],
               loss='categorical_crossentropy')
 
