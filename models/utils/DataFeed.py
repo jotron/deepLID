@@ -98,7 +98,7 @@ class Dataset():
                 self.id_list = pickle.load(fp)
             self.num = len(self.id_list)
             self.labels = self.labelize()
-            self.indexes = np.arange(num)
+            self.indexes = np.arange(self.num)
             
         else:
             self.id_list, self.labels = self.scan_path()

@@ -6,4 +6,8 @@ A list of hyperparamets can be found [here](potential_hyperparameters.md).
 
   inspired from *Tom Herold, Thomas Werkmeister Paper; Shallow Architecture* with BN
 
+- #### dense_baseline (val_acc=45%)
+
+  5 x [FC 256, Dropout 0.5, l2 0.0001, relu] + [FC 3, softmax]
+
 

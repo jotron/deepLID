@@ -26,26 +26,23 @@ callback_stopearly = keras.callbacks.EarlyStopping(monitor='val_acc',
 
 data_path = '../preprocessing/preprocessed_data'
 
-train_data, train_labels = DataFeed.Dataset.create(data_path, ['train/voxforge', 'train/youtube'], num=-1, use_premade=True)
+train_data, train_labels = DataFeed.Dataset.create(data_path, ['train/voxforge', 'train/youtube'], num=50000, use_premade=True)
 val_data, val_labels = DataFeed.Dataset.create(data_path, ['val/youtube', 'val/voxforge'], num=-1, shuffle=True)
+
 
 model = models.Sequential()
 model.add(layers.Flatten())
-model.add(layers.Dense(512, activation='relu'))
-model.add(layers.Dropout(0.2))
-model.add(layers.Dense(512, activation='relu'))
-model.add(layers.Dropout(0.2))
-model.add(layers.Dense(512, activation='relu'))
-model.add(layers.Dropout(0.2))
-model.add(layers.Dense(512, activation='relu'))
 model.add(layers.Dropout(0.5))
-model.add(layers.Dense(512, activation='relu'))
+model.add(layers.Dense(256, activation='relu', kernel_regularizer=regularizers.l2(0.0001)))
 model.add(layers.Dropout(0.5))
-model.add(layers.Dense(512, activation='relu'))
+model.add(layers.Dense(256, activation='relu', kernel_regularizer=regularizers.l2(0.0001)))
 model.add(layers.Dropout(0.5))
-model.add(layers.Dense(512, activation='relu'))
+model.add(layers.Dense(256, activation='relu', kernel_regularizer=regularizers.l2(0.0001)))
 model.add(layers.Dropout(0.5))
-model.add(layers.Dense(512, activation='relu'))
+model.add(layers.Dense(256, activation='relu', kernel_regularizer=regularizers.l2(0.0001)))
+model.add(layers.Dropout(0.5))
+model.add(layers.Dense(256, activation='relu', kernel_regularizer=regularizers.l1(0.0005)))
+model.add(layers.Dropout(0.5))
 model.add(layers.Dense(3, activation='softmax'))
 
 model.compile(optimizer=RMSprop(),
