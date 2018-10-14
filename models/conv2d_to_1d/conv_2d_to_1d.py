@@ -35,18 +35,24 @@ model.add(Melspectrogram(n_dft=512, input_shape=(1, 5 * 16000,),
                          fmin=0.0, fmax=10000, power_melgram=1.0,
                          return_decibel_melgram=False, trainable_fb=False,
                          trainable_kernel=False))
-model.add(layers.Conv2D(64, (3, 3), activation='relu'))
-model.add(layers.MaxPooling2D((2, 2)))
-model.add(layers.Conv2D(64, (3, 3), activation='relu'))
-model.add(layers.MaxPooling2D((2, 2)))
-model.add(layers.Conv2D(128, (3, 3), activation='relu'))
-model.add(layers.MaxPooling2D((2, 2)))
-model.add(layers.Reshape((-1, 1)))
-model.add(layers.Conv1D(16, 16, activation='relu'))
+#model.add(layers.SpatialDropout2D(0.2))
+model.add(layers.SeparableConv2D(128, (5, 1), activation='relu'))
+model.add(layers.MaxPooling2D((3, 1)))
+#model.add(layers.SpatialDropout2D(0.2))
+model.add(layers.SeparableConv2D(128, (5, 1), activation='relu'))
+model.add(layers.MaxPooling2D((4, 1)))
+model.add(layers.Reshape((-1, 128)))
+#model.add(layers.SpatialDropout2D(0.2))
+model.add(layers.SeparableConv1D(128, 14, activation='relu'))
+model.add(layers.MaxPooling1D(4))
+model.add(layers.SeparableConv1D(128, 14, activation='relu'))
+model.add(layers.MaxPooling1D(4))
+model.add(layers.SeparableConv1D(128, 14, activation='relu'))
+model.add(layers.MaxPooling1D(2))
 model.add(layers.Flatten())
 model.add(layers.Dense(3, activation='softmax'))
 
-model.compile(optimizer=RMSprop(),
+model.compile(optimizer=RMSprop(lr=0.003, decay=1e-4),
               metrics=['accuracy'],
               loss='categorical_crossentropy')
 

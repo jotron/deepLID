@@ -10,4 +10,8 @@ A list of hyperparamets can be found [here](potential_hyperparameters.md).
 
   5 x [FC 256, Dropout 0.5, l2 0.0001, relu] + [FC 3, softmax]
 
+- #### conv2d_to_conv1d (val_acc=90%)
+
+  2 x [Conv2D 128 relu + MaxPooling ] + 3 x [Conv1D 128 relu + MaxPooling ]
+
 
