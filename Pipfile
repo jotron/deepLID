@@ -4,17 +4,22 @@ verify_ssl = true
 name = "pypi"
 
 [dev-packages]
-youtube-dl = "*"
+youtube_dl = "*"
 
 [packages]
-flask = "*"
-keras = "*"
-tensorflow = "==1.5"
+Flask = "*"
+Keras = "*"
 librosa = "*"
 kapre = "*"
-soundfile = "*"
+SoundFile = "*"
 ipykernel = "*"
 seaborn = "*"
+numpy = "==1.14.5"
+"e043c5a" = {path = "/home/paperspace/tensorflow/tensorflow-1.10.1-cp36-cp36m-linux_x86_64.whl"}
+notebook = "*"
+comet-ml = "*"
+pillow = "*"
+keras-contrib = {git = "https://www.github.com/keras-team/keras-contrib.git"}
 
 [requires]
-python_version = "3.5"
+python_version = "3.6"

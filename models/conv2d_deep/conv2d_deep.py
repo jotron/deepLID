@@ -7,6 +7,7 @@ from kapre.time_frequency import Melspectrogram
 from kapre.augmentation import AdditiveNoise
 from kapre.utils import Normalization2D
 from keras import regularizers
+from keras_contrib.applications.resnet import ResNet18, ResNet
 
 import sys
 import os
@@ -18,7 +19,7 @@ np.random.seed(42)
 
 # monitoring
 experiment = Experiment(api_key="P9qHCZEUF514fowP4zfVDbGBl",
-                        project_name="BerlinNetMelBn", workspace="jotron")
+                        project_name="conv2d_deep", workspace="jotron")
 
 callback_stopearly = keras.callbacks.EarlyStopping(monitor='val_acc',
                                                    patience=5)
@@ -26,34 +27,25 @@ callback_stopearly = keras.callbacks.EarlyStopping(monitor='val_acc',
 
 data_path = '../preprocessing/preprocessed_data'
 
-train_data, train_labels = DataFeed.Dataset.create(data_path, ['train/voxforge', 'train/youtube'], num=50000, use_premade=True)
+train_data, train_labels = DataFeed.Dataset.create(data_path, ['train/voxforge', 'train/youtube'], num=50000, use_premade=False)
 val_data, val_labels = DataFeed.Dataset.create(data_path, ['val/youtube', 'val/voxforge'], num=-1, shuffle=True)
 
 model = models.Sequential()
 model.add(Melspectrogram(n_dft=512, input_shape=(1, 5 * 16000,),
-                         padding='same', sr=16000, n_mels=28,
-                         fmin=0.0, fmax=10000, power_melgram=1.0,
+                         padding='same', sr=16000, n_mels=192, n_hop=418,
+                         fmin=0.0, fmax=8000, power_melgram=1.0,
                          return_decibel_melgram=False, trainable_fb=False,
                          trainable_kernel=False))
-model.add(layers.Conv2D(64, (3, 3), activation='relu'))
-model.add(layers.MaxPooling2D((2, 2)))
-model.add(layers.Conv2D(64, (3, 3), activation='relu'))
-model.add(layers.MaxPooling2D((2, 2)))
-model.add(layers.Conv2D(128, (3, 3), activation='relu'))
-model.add(layers.MaxPooling2D((2, 2)))
-model.add(layers.Dropout(0.3))
-model.add(layers.Flatten())
-model.add(layers.Dense(1048, activation='relu'))
-model.add(layers.Dense(3, activation='softmax'))
+model.add(ResNet(input_shape=(192, 192, 1), classes=3, block='basic', repetitions=[2, 2, 2], dropout=0.5))
 
-model.compile(optimizer=RMSprop(),
+model.compile(optimizer=RMSprop(lr=0.001, decay=1e-8),
               metrics=['accuracy'],
               loss='categorical_crossentropy')
 
 if __name__ == '__main__':
     history = model.fit(x=train_data,
                         y=train_labels,
-                        batch_size=128, 
+                        batch_size=64, 
                         epochs=13,
                         verbose=2,
                         validation_data=(val_data, val_labels), 

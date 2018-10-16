@@ -18,10 +18,10 @@ np.random.seed(42)
 
 # monitoring
 experiment = Experiment(api_key="P9qHCZEUF514fowP4zfVDbGBl",
-                        project_name="BerlinNetMelBn", workspace="jotron")
+                        project_name="conv_2d_to_rnn", workspace="jotron")
 
 callback_stopearly = keras.callbacks.EarlyStopping(monitor='val_acc',
-                                                   patience=5)
+                                                   patience=4)
 
 
 data_path = '../preprocessing/preprocessed_data'
@@ -31,20 +31,34 @@ val_data, val_labels = DataFeed.Dataset.create(data_path, ['val/youtube', 'val/v
 
 model = models.Sequential()
 model.add(Melspectrogram(n_dft=512, input_shape=(1, 5 * 16000,),
-                         padding='same', sr=16000, n_mels=28,
-                         fmin=0.0, fmax=10000, power_melgram=1.0,
+                         padding='same', sr=16000, n_mels=32,
+                         fmin=0.0, fmax=8000, power_melgram=1.0,
                          return_decibel_melgram=False, trainable_fb=False,
                          trainable_kernel=False))
-model.add(layers.Conv2D(64, (3, 3), activation='relu'))
-model.add(layers.MaxPooling2D((2, 2)))
-model.add(layers.Conv2D(64, (3, 3), activation='relu'))
-model.add(layers.MaxPooling2D((2, 2)))
-model.add(layers.Conv2D(128, (3, 3), activation='relu'))
-model.add(layers.MaxPooling2D((2, 2)))
-model.add(layers.Dropout(0.3))
-model.add(layers.Flatten())
-model.add(layers.Dense(1048, activation='relu'))
+model.add(layers.Conv2D(16, (4, 4), activation='relu', padding='same'))
+model.add(layers.MaxPooling2D((2, 2 )))
+model.add(layers.BatchNormalization())
+
+model.add(layers.Conv2D(16, (2, 2), activation='relu', padding='same'))
+model.add(layers.MaxPooling2D((2, 1)))
+model.add(layers.BatchNormalization())
+
+model.add(layers.Conv2D(32, (2, 2), activation='relu', padding='same'))
+model.add(layers.MaxPooling2D((2, 1)))
+model.add(layers.BatchNormalization())
+
+model.add(layers.Conv2D(32, (2, 2), activation='relu', padding='same'))
+model.add(layers.MaxPooling2D((2, 1)))
+model.add(layers.BatchNormalization())
+
+model.add(layers.Conv2D(32, (2, 2), activation='relu', padding='same'))
+model.add(layers.MaxPooling2D((2, 1)))
+model.add(layers.BatchNormalization())
+
+model.add(layers.Reshape((-1, 32)))
+model.add(layers.GRU(32, dropout=0.3))
 model.add(layers.Dense(3, activation='softmax'))
+model.summary()
 
 model.compile(optimizer=RMSprop(),
               metrics=['accuracy'],
@@ -53,8 +67,8 @@ model.compile(optimizer=RMSprop(),
 if __name__ == '__main__':
     history = model.fit(x=train_data,
                         y=train_labels,
-                        batch_size=128, 
-                        epochs=13,
+                        batch_size=64, 
+                        epochs=25,
                         verbose=2,
                         validation_data=(val_data, val_labels), 
                         shuffle=True,

@@ -4,17 +4,22 @@ import os
 import keras
 import numpy as np
 import pickle
+from keras.preprocessing.image import ImageDataGenerator
+from kapre.time_frequency import Melspectrogram
+from keras import models, layers
+
 
 class DataGenerator(keras.utils.Sequence):
     'Generates data for Keras'
     
-    def __init__(self, path, sources, num=-1, batch_size=32, dim=(1, 80000), shuffle=True):
+    def __init__(self, path, sources, num=-1, batch_size=32, dim=(1, 80000), shuffle=True, data_augmentation=False):
         'Initialization'
         self.dim = dim
         self.batch_size = batch_size
         self.path = path
         self.shuffle = shuffle
         self.sources = sources
+        self.data_augmentation = data_augmentation
         
         self.id_list, self.labels = self.scan_path()
         self.indexes = np.arange(len(self.id_list))
@@ -22,6 +27,21 @@ class DataGenerator(keras.utils.Sequence):
         # If a certain number of samples is specified
         if num != -1 and num != len(self.indexes):
             self.indexes = np.random.choice(self.indexes, num, replace=False)
+            
+        if data_augmentation:
+            self.datagen = ImageDataGenerator(
+                            featurewise_center=True,
+                            featurewise_std_normalization=True,
+                            rotation_range=20,
+                            width_shift_range=0.2,
+                            height_shift_range=0.2,
+                            horizontal_flip=True)
+            self.model = models.Sequential([Melspectrogram(n_dft=512, input_shape=(1,80000),
+                         padding='same', sr=16000, n_mels=192, n_hop=418,
+                         fmin=0.0, fmax=8000, power_melgram=1.0,
+                         return_decibel_melgram=False, trainable_fb=False,
+                         trainable_kernel=False)])
+            self.model.compile('SGD', loss='binary_crossentropy')
             
         self.on_epoch_end()
     def scan_path(self):
@@ -67,7 +87,11 @@ class DataGenerator(keras.utils.Sequence):
         'Updates indexes after each epoch'
         if self.shuffle == True:
             np.random.shuffle(self.indexes)
-
+            
+    def data_augmentor(self, x):
+        x = self.model.predict_on_batch(x)
+        x = self.datagen.flow(x, batch_size=32)[0]
+        return x
     def __data_generation(self, id_list_temp):
         'Generates data containing batch_size samples' 
         # Initialization
@@ -81,6 +105,9 @@ class DataGenerator(keras.utils.Sequence):
 
             # Store class
             y[i] = self.labels[ID]
+        
+        if self.data_augmentation:
+            X = self.data_augmentor(X)
 
         return X, keras.utils.to_categorical(y, num_classes=3)
     
