@@ -21,7 +21,7 @@ A list of hyperparamets can be found [here](potential_hyperparameters.md).
   idea: using dCNN like AlexNet, VGG and Resnet for LID
   → overfits too much
 
-- #### conv2d_to_rnn (val_acc=92.2%)
+- #### conv2d_to_rnn (val_acc=94%)
 
   (multiple architectures, see in README)
   idea: using dCNN like AlexNet, VGG and Resnet for feature extraction, than a RNN for temporal analysis
