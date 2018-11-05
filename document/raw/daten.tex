@@ -64,8 +64,8 @@ Die Prozedur dem Algorithmus bereits vorgerechnete Werte zu füttern, heisst \te
 		\includegraphics[width=0.6\textwidth]{assets/audio_mel.png}
 	\centering
 	\caption{Audio-Preprocessing: \textit{(oben)} Rohe Schallwelle, \textit{(mitte)}
-		     Log-power Spectrogramm, 
-		     \textit{(unten)} Mel Spectrogramm}
+		     Dezibel-Spectrogramm, 
+		     \textit{(unten)} Mel Dezibel-Spectrogramm}
 	\label{img:preprocessing}
 \end{figure}
 Spektrogramme sind grafische Darstellungen eines Hörsignals nach der Anwendung der Fourrier-Transformation\parencite[]['Spectrograms']{fourrier}, ersichtlich in Abbildung \ref{img:preprocessing} \textit{(Mitte)}. Frequenzen über 10kHz können abgeschnitten werden, da menschliche Sprache übermässig darunter abläuft\parencite{tenkHz}. Im Spektrogramm lassen sich von Auge Muster erkennen und unterscheiden. Der visuelle Charakter der Spektrogramme erlaubt ausserdem das verwenden von \textit{Convolution Neural Networks}.
@@ -83,7 +83,7 @@ Anstatt die Transformationen selber zu implementieren wird ein Framework verwend
 	\centering
 		\includegraphics[width=0.6\textwidth]{assets/kapre.png}
 	\centering
-	\caption{\textit{Kapre}\parencite{kapre} as a layer}
+	\caption{\textit{Kapre}\parencite{kapre} als Schicht}
 	\label{img:kapre}
 \end{figure}
 
