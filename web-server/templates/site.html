@@ -1,10 +1,9 @@
 <!doctype html>
 <!--HTML help found on w3schools.com-->
-<!--progress bar: https://www.w3schools.com/howto/howto_js_progressbar.asp-->
+<!--progress bar: https://www.w3schools.com/tags/tag_progress.asp-->
 <head>
     <title>deepLID</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <script src="https://cdn.WebRTC-Experiment.com/RecordRTC.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -12,9 +11,9 @@
     <h1>deepLID - Demo</h1>
     <button id="recorder">Start Recording</button>
     <button id="uploader">Upload Recording</button>
-    <div id="bar">
-        <div id="progress"></div>
-    </div>
+    <progress id="bar" value="0" max="100"></progress>
+    <div id="audio_container"></div>
     <div id="pred_container"></div>
+    <script src="{{ url_for('static', filename='RecordRTC.js') }}"></script>
     <script src="{{ url_for('static', filename='record.js') }}"></script>
 </body>

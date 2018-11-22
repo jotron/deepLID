@@ -3,8 +3,8 @@
     "append": true,
     "watch": true,
     "command": "pipenv run python",
-    "script": "webserver.py",
-    "sourceDir": "/home/joel/deepLID/web-server",
+    "script": "web-server/webserver.py",
+    "sourceDir": "/home/joel/deepLID",
     "colors": true,
     "killTree": true,
     "LOGFILE": "deeplog.log"
