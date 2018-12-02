@@ -8,6 +8,7 @@ from flask import Flask, request, render_template
 import io
 from keras.models import load_model
 import soundfile as sf
+import librosa
 import kapre
 import tensorflow as tf
 import numpy as np
@@ -20,12 +21,17 @@ graph = tf.get_default_graph()
 # initialize
 app = Flask(__name__)
 
-
 # prediction
 def predict(tmp_file):
-    signal, samplerate = sf.read(tmp_file, dtype='float64')
+    signal, sr = sf.read(tmp_file, dtype='float64')
 
-    if (len(signal) < 5*16000): # failing front-end
+    # not 16k sampleRate (safari)
+    if (sr != 16000):
+        signal = librosa.resample(signal, sr, 16000)
+        sr = 16000
+
+    # recording is too short (failing frontend)
+    if (len(signal) < 5*16000):
         print("recording to short")
         print(len(signal))
 

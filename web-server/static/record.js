@@ -2,6 +2,7 @@
 //   https://github.com/muaz-khan/RecordRTC
 //   https://github.com/muaz-khan/WebRTC-Experiment/issues/48
 //   http://air.ghost.io/recording-to-an-audio-file-using-html5-and-js/
+//   https://github.com/muaz-khan/RecordRTC/blob/master/simple-demos/audio-recording.html
 (function() {
 
     // get elements from webpage
@@ -10,14 +11,23 @@
     var progress_bar = document.getElementById("bar"); // progress bar
     var audio_container = document.getElementById("audio_container");
 
+    // count number of media recorders
+    var num = 0;
+
     //disable upload button as long as no recording present
     uploader.disabled = true;
+
+    // check if safari browser
+    var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
     //ajax form to POST
     formData = new FormData();
 
     //When start button is clicked
     recorder.onclick = function() {
+
+        // increase num
+        num = num + 1;
 
         //record only audio
         var mediaConstraints = { video: false, audio: true };
@@ -30,11 +40,20 @@
         navigator.mediaDevices.getUserMedia(mediaConstraints)
         .then(function(stream) {
 
-            var recordRTC = RecordRTC(stream, { recorderType: StereoAudioRecorder,
-                                                mimeType: 'audio/wav',
-                                                numberOfAudioChannels: 1,
-                                                desiredSampleRate: 16000,
-                                                onAudioProcessStarted: progress_move()});
+            // set options
+            var options = { recorderType: StereoAudioRecorder,
+                            mimeType: 'audio/wav',
+                            numberOfAudioChannels: 1,
+                            desiredSampleRate: 16000,
+                            onAudioProcessStarted: progress_move()};
+
+            if(isSafari) {
+                options.sampleRate = 44100;
+                options.bufferSize = 4096;
+            }
+
+            // init recordRTC
+            var recordRTC = RecordRTC(stream, options);
             // set duration of recording 5s (6s to be sure)
             recordRTC.setRecordingDuration(6 * 1000)
             .onRecordingStopped(function(url) {
@@ -49,6 +68,7 @@
 
                     // disconnect microphone
                     stream.stop();
+                    stream = null;
 
                     // reenable buttons
                     uploader.disabled = false;
@@ -59,7 +79,13 @@
             recordRTC.startRecording();
         })
         .catch(function(error) {
-          alert("Unable to capture your microphone.")
+          // some browsers support only a limited amount of media objects
+          if (num >= 2) {
+            alert("Max number of recordings exceeded. Please Refresh.")
+          }
+          else {
+            alert("Unable to capture your microphone.")
+          }
           console.log(error)
         });
     }
