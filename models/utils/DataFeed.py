@@ -101,7 +101,12 @@ class DataGenerator(keras.utils.Sequence):
         # Generate data
         for i, ID in enumerate(id_list_temp):
             # Store sample
-            X[i,] = np.load(ID)
+            x = np.load(ID)
+            #print(X.shape, x.shape, i, len(x))
+            if (len(x) > 80000):
+                x = x[:80000]
+            else:
+                X[i, 0, :x.shape[1]] = x[0]
 
             # Store class
             y[i] = self.labels[ID]
