@@ -1,26 +1,11 @@
-h1 {
-    color: blue
-}
-
 #bar {
     margin-top: 5px;
     width: 238px;
-    background-color: lightgrey;
-}
-#progress {
-    width: 1%;
-    height: 14px;
-    background-color: green;
+    display: block;
 }
 
 audio {
     margin-top: 5px;
-}
-
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    padding: 15px;
 }
 
 #pred_container {

@@ -2,7 +2,7 @@
 
 A list of hyperparamets can be found [here](potential_hyperparameters.md).
 
-- #### berlin_net (val_acc=92%)
+- #### berlin_net (val_acc=94%)
 
   inspired from *Tom Herold, Thomas Werkmeister Paper; Shallow Architecture* with BN
 
@@ -21,7 +21,7 @@ A list of hyperparamets can be found [here](potential_hyperparameters.md).
   idea: using dCNN like AlexNet, VGG and Resnet for LID
   → overfits too much
 
-- #### conv2d_to_rnn (val_acc=94%)
+- #### conv2d_to_rnn (val_acc=95%)
 
   (multiple architectures, see in README)
   idea: using dCNN like AlexNet, VGG and Resnet for feature extraction, than a RNN for temporal analysis

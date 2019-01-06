@@ -1,16 +1,8 @@
 # deepLID
 
+Language identification [French, English, German] with deep learning.
+
 Online Demo at *https://jo.guru.xxx/deeplid*
-
-## Problem description
-
-*as in 'Deep learning with Python' Chapter 4.5*
-
-**Input_data:** Audio files from Voxforge, Youtube etc.
-
-**Target:** Language label, either german, french or english
-
-→ **Type:** Multiclass classification
 
 ## Repo Structure
 
