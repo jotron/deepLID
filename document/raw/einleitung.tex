@@ -1,62 +1,37 @@
 \section{Einleitung}
-\subsection{Themenwahl}
-Für mich war seit Anfang an klar, dass ich meine Maturaarbeit im Fach Informatik beschreiten will. Ich interessierte mich schon lange für das Fach, besuchte das Freifach
-Begabtenförderung-Informatik  und war darum auch nicht ganz ohne Vorwissen. Informatik erlaubt wie kein anderes Fach ohne grössere Ressourcen ein konkurrenzfähiges Produkt zu 
-gestalten. Würde ich eine Informatik-Startup lancieren, bräuchte ich dafür nur meinen Computer und einen Internet-Anschluss, nichts anderes. Das nötige Wissen findet man ohne lange
-Ausbildung im Internet. Auf diese Weise ermöglicht Informatik Jugendlichen wahrhaftig produktiv zu sein.
-\\ \\ 
-Das Teilgebiet auf die Künstliche Intelligenz zu fixieren nahm mir längere Zeit. KI hat aber mehrere Vorteile gegenüber anderen Themen. 
-
-Erstens ist es extrem aktuell. In den letzten Jahren wurden enorme Fortschritte gemacht was dazu führt, dass die Industrie der Forschung weit hinterher ist. Dank fortgeschrittener
-Computer-Hardware und neuen Algorithmen können Maschinen heute Aufgaben lösen die vor zehn Jahren unmöglich erschienen. Diese Aufblühende Phase wird generell KI-Sommer
-genannt.
-
-Zweitens ist KI für mich faszinierend. Künstliche Intelligenz fasziniert den Menschen bereits seit langer Zeit. Das Prinzip, einer Maschine Teile unserer kognitiven Fähigkeiten
-beizubringen ist für viele der nächste Schritt der menschlichen Evolution.
-Zuletzt überlege ich mir mein Studium in Richtung Informatik/Ki zu absolvieren. Diese Arbeit ist für mich persönlich also ein Test, ob dies das richtige für mich ist.
-
+Sprachoberflächen sind der aktuelle Megatrend in der Tech-Branche. Ein Algorithmus, der natürliche Sprache zuverlässig versteht ist längst kein Sciene-Fiction mehr. Hight-Tech-Firmen rund um den Globus investieren Milliarden in die Entwicklung solcher Produkte. Wie das iPhone mit dem Touchscreen eine Revolution der Interaktion Mensch-Maschine lancierte, erhofft man sich mit Spracherkennung den nächsten Durchbruch. Sprachgesteuerte Programme sollen weitaus intuitiver zu bedienen sein als Texteingaben. In Zukunft ist die lästige Uhrzeitabfrage-Bewegung zum Handy wahrscheinlich Geschichte. Wir werden bequem danach fragen können.
+\\ \\
+Moderne Spracherkennung-Systeme sind auf einzelne Sprachen spezialisiert. Aus diesem Grund muss ein sprachunabhängiges System, in erster Linie die verwendete Sprache identifizieren, um anschliessend, das passende Sprachsystem anzuwenden. Dieser Schritt nimmt zum Beispiel die Grammatik der erkannten Sprache zur Hilfe. In dieser Arbeit geht es darum den Prozess der Sprachidentifikation zu implementieren:  Aufnahmen mündlicher Äusserungen sollen der korrekten Sprache zugeordnet werden. 
+\\ 
+Die Idee zu diesem Thema entstand spontan. Für mich war aber seit Anfang an klar, dass ich meine Maturaarbeit im Fach Informatik beschreiten würde. Ich nahm bereits an der Informatikolympiade und dem Freifach \textit{Begabtenförderung Informatik} teil. Mich weiter in diesen Bereich zu vertiefen, war eine logische Konsequenz. Überdies besitzen Informatik-Projekte den Vorteil äusserst ressourcenarm zu sein. Ein Computer mit Internet-Anschluss reicht, um ein innovatives Produkt zu entwickeln, dass die Welt verändern kann. Das nötige Wissen lässt sich ohne lange Ausbildung im Internet finden. Entsprechend erlaubt Informatik Jugendlichen bereits  teil der Wirtschaft zu sein. Kein 14-Jähriger kann ohne teures Labor Medikamente entwickeln, hingegen für die Idee auf Blockchain hätte theoretisch jeder die Mittel gehabt.
+\\ \\
+Für die Sprachidentifikation beschränke ich mich auf die Methode, \textit{Künstliche Intelligenz}. KI ist ein prominentes junges Teilgebiet der Informatik. In den letzten Jahren wurden enorme Fortschritte gemacht, was dazu führt, dass die Wirtschaft der Forschung weit hinterher hinkt. Dank fortgeschrittener Computer-Hardware und neuen Algorithmen können Maschinen heute Aufgaben lösen, die vor zehn Jahren unmöglich erschienen.
+Mich persönlich fasziniert diese Entwicklung. Künstliche Intelligenz beschäftigt den Menschen bereits seit Uhrzeiten. Das Prinzip, einer Maschine Teile unserer kognitiven Fähigkeiten beizubringen, ist für mich so wichtig, wie die Entdeckung des Feuers. Hier etwas beitragen zu können, ist meine grosse Ambition.
+\\
 Die klassischen Projekte in KI-Arbeiten sind oft Spiele. Es wird dem Computer beigebracht besser zu spielen als jeder Mensch. So ist es zum Beispiel beim Schachcomputer
 \textit{Deep blue}\parencite{deepblue} oder dem Go-Programm \textit{AlphaGo}\parencite{alphago}.
-Solche Projekte bieten zwar gute Forschungsprojekte sind aber an sich keine Anwendungsfelder. Ich wollte in meiner Arbeit etwas programmieren, das tatsächlich einen realen Nutzen
-hat.
-Schlussendlich bin ich auf Sprachidentifikation gestossen. Mit zwei Muttersprachen bin ich perfekt geeignet, mein Projekt zu testen und Sprachmaterial lies sich genügend im Internet
-finden. Das war ausschlaggebend.
-
-\subsection{Ziel der Arbeit}
-Bei Sprachidentifikation geht es darum, anhand von Audio-Aufnahmen die gesprochene Sprache zu bestimmen. Eine fortgeschrittene Anwendung ist Spracherkennung: Moderne
-Computer und Mobiltelefone interagieren zunehmlich mit uns über unsere Stimme. Dank schneller Sprachidentifikation kann das Gerät die Grammatik der Sprache dabei zur Hilfe
-nehmen.
-Eine weitere Anwendung sind zum Beispiel Support-Anrufe. Eine Computer erkennt die Sprache und leitet den Anruf an den passenden Mitarbeiter weiter.
-
-Klassische Methoden für die Sprachidentifikation beruhen stark auf Expertenwissen. Die Signale werden mehrfach mit komplexen Operationen bearbeitet um dann mit nicht weniger
-einfacheren Algorithmen ausgewertet zu werden.
-In dieser Arbeit wird ein anderer Ansatz gewählt. Der Computer soll möglichst viel selbst erlernen. Dafür beschränke ich mich auf die Technologie \textit{Deep Learning}.
-\\ \\ 
+Solche Projekte bieten zwar gute Forschungsprojekte, sind aber an sich keine Anwendungsfelder. Ich wollte in meiner Arbeit etwas programmieren, das tatsächlich einen realen Nutzen
+besitzt.
+Sprachidentifikation erfüllt das Kriterium. Sprachidentfikation kann nebst für die Spracherkennung, unter anderem im Anrufcenter angewendet werden. Eine Computer erkennt die Sprache des Kunden und leitet den Anruf an den passenden Mitarbeiter weiter.
+\\ \\
+Klassische Methoden für die Sprachidentifikation beruhen stark auf Expertenwissen. Analytisch entwickelte, handprogrammierte Verfahren erreichen mit  wenig maschinellem Lernen sehr gute Leistungen. In dieser Arbeit wird ein anderer Ansatz gewählt. Der Computer soll möglichst viel selbst erlernen. Dafür beschränke ich mich auf die Technologie \textit{Deep Learning}. 
+\\ 
 Das Ziel dieser Arbeit lässt sich in zwei Teile gliedern. Zuerst soll KI bzw. Deep Learning beschrieben werden und soweit wie möglich ein Verständnis dafür geschaffen werden.
-Anschliessend wird die Technologie auf das Problem Sprachidentifikation angewendet. Als zu identifizierende Sprachen beschränke ich mich auf Französisch, Englisch, und Deutsch. Es
+Anschliessend wird die Technologie auf das Problem Sprachidentifikation angewendet. Als zu identifizierende Sprachen beschränke ich mich auf Französisch, Englisch und Deutsch. Es
 werden verschiedene Ansätze probiert und verglichen. Das Produkt soll eine möglichst grosse Fehlerfreiheit besitzen. Um das Produkt zu demonstrieren, wird ein Web-Interface
-entwickelt das einem ermöglicht das Produkt selber zu testen.
-
-\subsection{Vorgehen}
-Ich hatte a priori der Arbeit bereits das \textit{Neuronale Netze selbst programmieren}\parencite{neuronale_netze} aus dem Info-Z gelesen. Dies ermöglichte mir erst meine
-Fragestellung genau einzuschränken und den nötigen Aufwand abzuschätzen.
-Die enthaltenen Informationen waren aber noch nicht genügend um mit dem Produkt anzufangen. Deshalb recherchierte ich noch eine Zeit weiter. Besonders hilfreich war das Buch
-\textit{Deep learning with Python}\parencite{chollet}, was als meine theoretische Grundlage diente.
-
-Parallel fing ich an das Web-Interface zu entwickeln. Das nötige Know-How hatte ich bereits grösstenteils als Vorwissen. Das früh realisierte Interface erlaubte mir mein Produkt in der
-Entwicklungsphase live zu testen.
-\\ \\ 
-Der nächste Schritt war endlich das programmieren am Produkt. In dieser Phase gab mir das Paper \textit{Practical Applications of Multimedia Retrieval. Language Identification in Audio
-Files}\parencite{iLID} die richtige Richtung vor. 
-
-Um die Unterschiede zwischen den Sprachen zu erlernen braucht mein Programm viele Trainings-Daten. Die Beschaffung dieser grossen Menge Daten und das effiziente umgehen
-damit, kostete mich mehr Zeit als eingeschätzt und gab mir schlaflose Nächte.
-
-Die Letzte Phase, das entwickeln der künstlichen Intelligenz, war am spannendsten. Die Komplexität des Themas erlaubte mir allerdings oft nur oberflächlich ein Verständnis zu
-entwickeln weil mir die mathematischen Grundlagen auf Universitäts-Stufe fehlten.
-
-\subsection{Aufbau}
-Im Kapitel \textbf{2 Deep Learning} werden die Technologien der künstlichen Intelligenz vorgestellt. Das Kapitel bildet das Herz des instruktiven Teils. Das nächste Kapitel \textbf{3
-Daten} befasst sich mit den Quellen der Daten, den Methoden zur Datenbeschaffung und zur Datenbearbeitung. Anschliessend wird in Kapitel \textbf{4 Web Interface} das Interface und
+entwickelt, das einem ermöglicht, das Produkt selber zu testen.
+\\ \\
+Um die Realisarbarkeit dieses Vorhabens zu beurteilen, hatte ich im Vorfeld der Arbeit, bereit das Buch  \textit{Neuronale Netze selbst programmieren}\parencite{neuronale_netze} aus dem Info-Z gelesen. Dies ermöglichte mir erst, meine Fragestellung so genau einzuschränken und den nötigen Aufwand abzuschätzen. Die enthaltenen Informationen waren aber noch lange nicht ausreichend um mit dem Programmieren zu beginnen. Ausschlaggebend war erst später das Buch \textit{Deep learning with Python}\parencite{chollet}, das als meine theoretische Grundlage dient. 
+\\
+Parallel fing ich an das Web-Interface zu entwickeln. Das nötige Know-How besass ich bereits grösstenteils als Vorwissen. Das früh realisierte Interface erlaubte mir, mein Produkt in der Entwicklungsphase live zu testen. 
+\\
+Der nächste Schritt war endlich das Programmieren am Produkt. In dieser Phase gab mir das Paper \textit{Practical Applications of Multimedia Retrieval. Language Identification in Audio
+Files}\parencite{iLID} die Richtung vor. 
+Um die Unterschiede zwischen den Sprachen zu erlernen, benötigt mein Programm viele Trainings-Daten. Die Beschaffung dieser grossen Menge Daten und das effiziente Umgehen damit, sind ein nicht zu unterschätzender Aufwand. 
+\\
+Die letzte Phase, das Entwickeln der künstlichen Intelligenz, war am spannendsten. Die Komplexität des Themas erlaubte mir allerdings oft nur oberflächlich, ein Verständnis zu entwickeln, zumal mir die mathematischen Grundlagen auf Universitäts- Stufe fehlten. 
+\\ \\
+Im Kapitel \textbf{2 Deep Learning} versuche ich, das Verständnis für die verwendeten Technologien der künstlichen Intelligenz weiterzugeben. Das Kapitel bildet das Herz des theoretischen Teils. Das nächste Kapitel \textbf{3
+Daten} befasst sich mit den Quellen der Daten, den Methoden zur Datenbeschaffung und den Algorithmen zur Datenbearbeitung. Anschliessend wird in Kapitel \textbf{4 Web Interface} das Interface und
 die verwendeten Frameworks vorgestellt. Kapitel \textbf{5 Resultate} präsentiert die entwickelten Modelle und vergleicht ihre Fehlerfreiheit. In \textbf{6 Diskussion} werden die
-Ergebnisse in Zusammenhang gestellt und Kapitel \textbf{7 Code} erlaubt Interessierten einen Einblick in den nötigen Code.
+Ergebnisse in Zusammenhang gestellt und Kapitel \textbf{7 Anhang} erlaubt Interessierten einen Einblick in den nötigen Code.
