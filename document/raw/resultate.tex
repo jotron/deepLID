@@ -1,11 +1,23 @@
           \section{Modelle}
 Im folgenden Teil werden die entwickelten Deep Learning Modelle vorgestellt. Für jedes Modell ist der grundlegende Ablauf derselbe (siehe Abbildung \ref{img:workflow}). Die Aufnahme wird vorab auf die Länge 5s zugeschnitten. Anschliessend wird ein Spektrogramm generiert. Die Werte des Spektrogramms werden in die Dezibell Skala umgerechnet und dann normiert. Die Grösse des Spektrogramms unterscheidet sich zwischen den Modellen. Schliesslich berechnet ein Neuronales Netzwerk aus dem Spektogramm eine Vorhersage für die drei Sprachen. 
 \\
-Insgesamt werden drei grundsätzlich verschiedene Neuronalen Netzwerk Architekturen vorgestellt. Die ersten zwei Modelle sind Convolutional Neural Networks während das dritte Modell eine Kombination zwischen CNN und Recurrent Neural Network ist. Jedes Modell endet mit einer Ausgabeschicht der Grösse drei (für die drei Sprachen) und der Aktivierungsfunktion \textit{softmax}:
+Insgesamt werden drei grundsätzlich verschiedene Neuronalen Netzwerk Architekturen vorgestellt. Die ersten zwei Modelle sind Convolutional Neural Networks während das dritte Modell eine Kombination zwischen CNN und Recurrent Neural Network ist. Jedes Modell endet mit einer Ausgabeschicht der Grösse drei. Jeder der der drei Werte steht für die Wahrscheinlichkeit einer Sprache. Um zu garantieren, dass die Summe der Werte 1 gibt wird die Aktivierungsfunktion \textit{softmax} verwendet:
 $$ \text{softmax}(\boldsymbol x)_i = \frac{\text{exp}(x_i)}{\sum_{j=0}^{n} \text{exp}(x_j)}$$
-Die Funktion eignet sich generell für Klassifizierung, denn sie bildet die Werte auf eine Wahrscheinlichkeitsverteilung über die berechneten Ausgabeklassen ab \parencite[][S. 180-184]{goodfellow}. Für alle anderen Schichten wird immer die Aktivierungsfunktion \textit{relu} verwendet.
+Beispiel: 
+$$ \text{softmax}(\begin{bmatrix} 0.5 & 0.8 & 0.3\end{bmatrix}) = \begin{bmatrix} 0.32 & 0.43 & 0.26\end{bmatrix} = \begin{bmatrix} p_{FR} & p_{EN} & p_{DE}\end{bmatrix}$$
+Die Funktion eignet sich generell für Klassifizierung, denn sie bildet die Werte auf eine Wahrscheinlichkeitsverteilung über die berechneten Ausgabeklassen ab \parencite[][S. 180-184]{goodfellow}. Für alle anderen Schichten wird immer die Aktivierungsfunktion \textit{ReLU} verwendet.
 \\
-Die Parameter der Modelle, wie zum Beispiel die Grösse des Spektrogramms wurden empirisch bestimmt. Allerdings ist die Anzahl Experimente beschränkt, da jeder Durchlauf zeitaufwändig und nicht parallelisierbar ist.
+Damit die Ziele des Netzwerks die gleichen Anzahl Dimensionen wie die Ausgaben haben, werden sie \textit{One-hot}\parencite{chollet} kodiert. Das bedeutet, dass die richtige Sprache die Wahrscheinlichkeit 1.0 besitzt und alle anderen 0. Das Ziel für eine französische Aufnahme ist also $\begin{bmatrix} 1.0 & 0.0 & 0.0\end{bmatrix}$, für eine englische Aufnahme $\begin{bmatrix} 0.0 & 1.0 & 0.0\end{bmatrix}$, etc.. Obwohl die Ziele die gleiche Form wie die Ausgaben haben lässt sich der Verlustwert nicht so leicht berechnen wie beim Anfangsbeispiel. Die Standard Verlustfunktion in diesem Fall ist \textit{Categorical Crossentropy}\parencite{chollet}. Für das Ziel $p$ und die Voraussage $\hat{p}$ ist die Funktion folgendermassen definiert:
+
+$$\text{H}(\boldsymbol{p}, \hat{\boldsymbol{p}}) = \sum\limits_{i} p_i \cdot \text{log}(\hat{p_i})$$
+\\
+Das diese Verlustfunktion sinnvoll ist lässt sich intuitiv verstehen: Das Ziel des Netzes soll es sein, die Wahrscheinlichkeit der richtigen Sprache zu maximieren. So soll zum Beispiel bei $\boldsymbol{P}=\begin{bmatrix} 0 & 1.0 & 0\end{bmatrix}$ und $\boldsymbol{\hat{P}}=\begin{bmatrix} P_o & P_1 & P_2\end{bmatrix}$,  $ P_1$ maximiert werden. Die Wahrscheinlichkeit der richtigen Sprache lässt sich einfach berechnen:
+$$\text{L}(\boldsymbol{p}, \hat{\boldsymbol{p}}) = \sum\limits_{i} p_i \cdot \hat{p_i}$$
+Im Beispiel oben fallen $P_0$ und $P_2$ weg und $1\cdot P_1$ bleibt übrig, was genau der Wahrscheinlichkeit der richtigen Sprache entspricht. Ab hier lässt sich nachvollziehen, das genau wie wir $L$ maximieren wollen, $-L$ (wie der Verlustwert) minimiert werden soll. Da $\text{log}$ eine monotonische Funktion ist entspricht $\text{min}(p)$ auch $\text{min(log(}p))$. Das Resultat ist genau die Categorical Crossentropy.
+$$\text{max}[\text{L}(\boldsymbol{p}, \hat{\boldsymbol{p}})] =\text{min}[-\text{L}(\boldsymbol{p}, \hat{\boldsymbol{p}})]$$
+$$\text{min}[-\text{L}(\boldsymbol{p}, \hat{\boldsymbol{p}})] =\text{min}[-\text{L}(\boldsymbol{p}, \text{log}(\boldsymbol{\hat{p}}))] = \text{H}(\boldsymbol{p}, \hat{\boldsymbol{p}})$$
+\\
+Die Parameter der Modelle, wie zum Beispiel die Grösse des Spektrogramms wurden empirisch bestimmt. Insgesamt wurden fast 200 Experimente durchgeführt. Allerdings konnte längst nicht jede mögliche Kombination von Parametern probiert werden, da jeder Durchlauf zeitaufwändig und nicht parallelisierbar ist.
 \begin{figure}[hbt]
 	\centering
 		\includegraphics[width=0.8\textwidth]{assets/modelflow.png}
@@ -64,13 +76,23 @@ Das bedeutet, dass dem Verlustwert zusätzlich das Quadrat der Gewichte addiert 
 	\centering
 	\begin{tabular}{lllll}
 		\hline
-		Netz & Architektur     & Accuracy & MAE \\ \hline
-		CNN  & 3 Conv          & 95.1\%     & 0.046  \\
-		CRNN & 4 Conv + LSTM   & 96.2\%     & 0.031  \\
-		CNN  & 28 Conv + Dense & 87\%     & 0.03  \\ \hline
+		Netz & Architektur     & Genauigkeit & Verlustwert & \\ \hline
+		CNN  & 3 Conv          & 95\%     & 0.13  \\
+		CRNN & 4 Conv + LSTM   & 97\%     & 0.15  \\
+		MobileNet  & 28 Conv + Dense & 92\%     & 0.27  \\ \hline
+	\end{tabular} \\
+	\caption{Beste Voxforge Genauigkeit}
+	\label{table:test_vox}
+	\vspace{0.3cm}
+	\begin{tabular}{lllll}
+		\hline
+		Netz & Architektur     & Genauigkeit & Verlustwert & \\ \hline
+		CNN  & 3 Conv          & 95.1\%     & 0.15  \\
+		CRNN & 4 Conv + LSTM   & 95\%     & 0.21  \\
+		MobileNet  & 28 Conv + Dense & 87\%     & 0.48  \\ \hline
 	\end{tabular}
-	\caption{Voxforge und YouTube Richtigkeit}
-	\label{table:test}
+	\caption{Beste YouTube Genauigkeit}
+	\label{table:test_you}
 \end{table}
 
 \begin{table}[h]
@@ -80,7 +102,7 @@ Das bedeutet, dass dem Verlustwert zusätzlich das Quadrat der Gewichte addiert 
 		Netz & Trainingsdauer \\ \hline
 		CNN  & 21 min \\
 		CRNN & 68 min \\
-		CNN  & 2h\\ \hline
+		MobileNet  & 210 min\\ \hline
 	\end{tabular}
 	\caption{Trainingsdauer}
 	\label{table:test}
@@ -88,9 +110,29 @@ Das bedeutet, dass dem Verlustwert zusätzlich das Quadrat der Gewichte addiert 
 
  \begin{figure}[hbt]
 	\centering
-		\includegraphics[width=0.5\textwidth]{assets/matrix.png}
-	\caption{Normierte Wahrheitsmatrix}
-	\label{img:matrix}
+		\includegraphics[width=0.5\textwidth]{assets/matrix_vox.png}
+	\caption{Wahrheitsmatrix Voxforge und Youtube (Total 10'000 Aufnahmen)}
+	\label{img:matrix_vox}
 \end{figure}
 
 \subsection{Auswertung an Librivox}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{lllll}
+		\hline
+		Netz & Architektur     & Genauigkeit & Verlustwert \\ \hline
+		CNN  & 3 Conv          & 88\%     & 0.34  \\
+		CRNN & 4 Conv + LSTM   & 94\%     & 0.24  \\
+		MobileNet  & 28 Conv + Dense & 94\%     & 0.19  \\ \hline
+	\end{tabular}
+	\caption{Beste Librivox Genauigkeit}
+	\label{table:test_lib}
+\end{table}
+
+ \begin{figure}[hbt]
+	\centering
+		\includegraphics[width=0.5\textwidth]{assets/matrix_lib.png}
+	\caption{Wahrheitsmatrix Librivox (Total 6120 Aufnahmen)}
+	\label{img:matrix_lib}
+\end{figure}
