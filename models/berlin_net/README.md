@@ -5,7 +5,7 @@
 - MelSpect + 3 CONV + 2 FC
 - heavily inspired by [iLID](https://github.com/twerkmeister/iLID/blob/master/Deep%20Audio%20Paper%20Thomas%20Werkmeister%2C%20Tom%20Herold.pdf)
 
-#### Experiments 
+#### Early experiments 
 
 (Later experiments are generally performed with best options so far)
 

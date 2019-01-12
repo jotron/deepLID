@@ -5,7 +5,7 @@
 - MelSpect +  CN Feature Extractor + RNN
 - idea: first process frequencies to phonemes and then process timeseries with RNN
 
-#### Experiments 
+#### Early Experiments 
 
 (Later experiments are generally performed with best options so far)
 

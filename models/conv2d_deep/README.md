@@ -17,3 +17,7 @@
 | ------ | ------------------------------------------------------------ | --------------------------------------- |
 | base   | [98a](https://www.comet.ml/jotron/conv2d-deep/98a709d7ac064f56830aad146e1f7245/metrics) | 78%, overfits → needs data augmentation |
 
+| Mobilenet | Experiments | Result [ValAcc] |
+| --------- | ----------- | --------------- |
+| base      | alpha=0.25  | 91% (Overfits)  |
+
