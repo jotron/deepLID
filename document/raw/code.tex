@@ -3,4 +3,21 @@
 \subsection{Beispiel-Modell Code}
 \lstinputlisting[language=Python,
 		      basicstyle=\small,
+		      deletekeywords={Compile},
 		      breaklines=true]{assets/code/model_snippet.py}
+
+
+\noindent \textit{Output:}\\
+\fbox{%
+    \parbox{\textwidth}{%
+         Train on 50000 samples, validate on 10000 samples\\
+         Epoch 1/13\\
+	- 44s - loss: 0.8041 - acc: 0.6301 - val\_loss: 0.7148 - val\_acc: 0.7094\\
+	Epoch 2/13\\
+	- 42s - loss: 0.5119 - acc: 0.7950 - val\_loss: 0.4190 - val\_acc: 0.8291\\
+	Epoch 3/13\\
+	- 42s - loss: 0.4299 - acc: 0.8334 - val\_loss: 0.3484 - val\_acc: 0.8664\\
+	Epoch 4/13\\
+	...
+    }%
+}

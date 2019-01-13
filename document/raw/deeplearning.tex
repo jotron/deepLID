@@ -12,15 +12,15 @@ Das Gebiet der künstlichen Intelligenz gibt es schon so lange wie den Computer 
 
 Erste Erfolge erreichte man zum Beispiel mit Schachcomputern, die handgeschriebene Regeln befolgten. Diese Form von künstlicher Intelligenz hat aber schnell Grenzen, da viele Prozesse schlicht zu komplex sind, um sie unter angemessenem Aufwand mit Regeln zu beschreiben. Um dieses Problem zu lösen, erfand man maschinelles Lernens. \index{Maschinelles Lernen}
 
-Der Ablauf von maschinellem Lernen ist grundlegend anders als konventionelles Programmieren. Der Entwickler muss  keinen Programmcode mit festen Regeln schreiben, im Gegenteil: Er liefert dem Computer Eingabe und Ausgabe, und der Computer lernt die Regeln selbst. Maschinelles Lernen blühte erst in den 90'er Jahren auf, wurde aber schnell zum grössten Teilgebiet der künstlichen Intelligenz.
+Der Ablauf von maschinellem Lernen ist grundlegend anders als konventionelles Programmieren. Der Entwickler muss  keinen Programmcode mit festen Regeln schreiben, im Gegenteil: Er liefert dem Computer Eingabe und Ausgabe, und der Computer lernt die Regeln selbst. Kurzgesagt lernt das System aus Beispielen Muster zu erkennen. Maschinelles Lernen blühte erst in den 90'er Jahren auf, wurde aber schnell zum grössten Teilgebiet der künstlichen Intelligenz.
 
-Beim maschinellem Lernen, lernt die Software im Grunde eine nützlichere Darstellungsweise der Daten bzw. der Eingabe. Anhand dieser anderen Darstellungsweise kann der Computer die Antwort einfach erkennen. Wenn der Computer stufenweise nützlichere Repräsentationen bestimmt, kann er zunehmend komplexe Probleme, in einfacheren Zwischenschritten lösen. Genau das ist \textit{Deep Learning}. Es bezeichnet das Konzept von stufenweisem Lernen und nicht eine Methode selbst. Eine weit verbreitete Methode sind allerdings \textit{tiefe künstliche neuronale Netze}.\parencite[vgl.][]{chollet} \index{Deep Learning}
+Beim maschinellem Lernen, lernt die Software im Grunde eine nützlichere Darstellungsweise der Daten bzw. der Eingabe. Anhand dieser anderen Darstellungsweise kann der Computer die Antwort einfach erkennen. Wenn der Computer stufenweise nützlichere Repräsentationen bestimmt, kann er zunehmend komplexe Probleme, in einfacheren Zwischenschritten lösen. Genau das ist \textit{Deep Learning}. Das \textit{Deep} entspringt der grossen Anzahl an aufeinanderfolgenden Repräsentation. Deep Learning bezeichnet das Konzept von stufenweisem Lernen und nicht eine Methode selbst. Eine weit verbreitete Methode sind allerdings \textit{tiefe künstliche neuronale Netze}.\parencite[vgl.][]{chollet} \index{Deep Learning}
 
 \subsection{Künstliche neuronale Netze}
 
 \textit{Künstliche neuronale Netze} \index{Künstliche neuronale Netze}hat man sich, wie der Name schon preisgibt, von der Natur abgesehen. Ähnlich wie in unserem Gehirn gibt es Neuronen bzw. Knoten und dazwischenliegende Verbindungen. Die \say{Intelligenz} entsteht erst aus dem Zusammenspiel tausender Neuronen. Künstliche Neurone Netze haben sich mittlerweile so stark weiterentwickelt, dass sie nebst der ursprünglichen Idee, nichts mehr mit der biologischen Variante gemeinsam haben. \\
 
-Der Wert eines Knotens/Neurons ist eine Funktion der Summe aller seiner eingehenden Verbindungen. Diese Funktion wird Aktivierungsfunktion $\sigma$ genannt. Die Aktivierungsfunktion ist wichtig, damit das Netzwerk auch nicht lineare Repräsentationen lernen kann. Eine bekannte Aktivierungsfunktion ist zum Beispiel die \textit{ReLU} \index{ReLU}Funktion. Die ReLU Funktion unterdrückt negative Werte, bzw. sie ist null für Werte kleiner als null.  \parencite{neuronale_netze} 
+Der Wert eines Knotens/Neurons ist abhängig von der Summe aller seiner eingehenden Verbindungen. Die Abhängigkeit wird duch die Aktivierungsfunktion $\sigma$ definiert. Die Aktivierungssfunktion ist wichtig, damit das Netzwerk jede mögliche Funktion abbilden kann. Es ist bewiesen dass neuronalen Netze universelle Approximatoren sind\parencite[][Kap. 4]{universal}. Eine bekannte Aktivierungsfunktion ist zum Beispiel die \textit{ReLU} \index{ReLU}Funktion. Die ReLU Funktion unterdrückt negative Werte, bzw. sie ist null für Werte kleiner als null.   \parencite{neuronale_netze} 
 $$\sigma(x) = \text{ReLU}(x) = \text{max}(0, x)$$
 
 Der Wert einer eingehenden Verbindung ist proportional zum Wert des Herkunfsknoten, bzw. des Knoten woher die Verbindung kommt. Der Wert des Herkunfsknoten wird multipliziert mit dem Gewicht der Verbindung: $w$. Die Gewichte der Verbindungen sind die Parameter des Netzwerks. Intuitiv kann man sich vorstellen, dass das Netzwerk lernt, wichtigeren Verbindungen grössere Gewichte zuzuordnen und Unwichtigen umgekehrt. Wenn man alles zusammensetzt ergibt sich für den Wert irgendeinen Knotens $o_i$ mit Vorgänger-Knoten $\boldsymbol{h}$ diese Formel:
@@ -42,12 +42,11 @@ Um den Verlustwert zu minimieren, passt das Netzwerk die Gewichte schrittweise a
 \begin{figure}[hbt]
 	\centering
 		\includegraphics[width=0.8\textwidth]{assets/anatomy.png}
-	\caption{Grafische Darstellung des Lern-Prozesses anhand eines Beispiels}
+	\caption{Visuelle Darstellung des Lern-Prozesses anhand eines Beispiels}
 	\label{img:anatomy}
 \end{figure}
 
 Da bei diesem Typ von neuronalen Netzwerken alle Knoten miteinander verbunden sind, wird es oft \textit{Dense Neural Network} \index{Dense Neural Network}genannt.
-Es ist bewiesen dass solche neuronalen Netze jede Funktion abbilden können\parencite[][Kap. 4]{universal}.
 \\
 Die mathematischen Operationen in einem neuronalen Netzwerk lassen sich alle als Matrizen-Operationen berechnen. Mit Matrizen kann der Computer auf einer Grafikkarte und mit einem BLAS \index{BLAS}(\textit{Basic linear algebra system}) sehr effizient rechnen \parencite{neuronale_netze} .
 
@@ -69,8 +68,8 @@ Ein weiterer Vorteil von \textit{Convolutional Neural Networks} ist, dass sie ei
 Damit das gilt, muss aber der analysierte Bereich eines Knotens, von Schicht zu Schicht grösser werden. Deshalb wird meisten nach jedem \textit{Convolution Layer} ein \textit{Pooling Layer} gesetzt. Das \textit{Pooling Layer} fasst mehrere Datenpunkte zusammen um dem nächsten Netzwerk eine grösseren Analysebereich zu verschaffen. Ein oft verwendetes Pooling-Verfahren ist \textit{Max-Pooling}: Angrenzende Knoten werden zusammengefasst durch ihr Maximum. \index{Max-Pooling}
 \begin{figure}[hbt]
 	\centering
-		\includegraphics[width=0.6\textwidth]{assets/pooling_1d.png}
-	\caption{Abbildung eines 1D Max-Pooling layer. $s_2$ ist $\max (x3, x4)$}
+		\includegraphics[width=0.75\textwidth]{assets/pooling_1d.png}
+	\caption{1D Max-Pooling layer: z.B $s_2$ ist $\max (x3, x4)$}
 	\label{img:pool}
 \end{figure}
 
@@ -81,7 +80,7 @@ Eine gemeinsame Eigenschaft von allen \textit{Dense Neural Networks} und CNN's i
 \textit{Recurrent Neural Networks} (RNN) bilden diesen Prozess vereinfacht nach. Sie besitzen eine interne wiederkehrende Schleife die dem Netzwerk Informationen aus dem vorherigen Durchlauf bereitstellt (Siehe Abbildung \ref{img:rnn_loop}). Die RNN Zelle berechnet dann die nächste Ausgabe sowohl aus der neuen Eingabe, wie auch mit den Erinnerungen der letzten Ausgabe. \parencite{chollet}\\
 \begin{figure}[hbt]
 	\centering
-		\includegraphics[width=0.25\textwidth]{assets/rnn_loop.png}
+		\includegraphics[width=0.35\textwidth]{assets/rnn_loop.png}
 	\caption{RNN mit Schlaufe}
 	\label{img:rnn_loop}
 \end{figure}
