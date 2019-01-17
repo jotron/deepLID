@@ -1,6 +1,6 @@
 <!doctype html>
 <!--HTML help found on w3schools.com-->
-<!--progress bar: https://www.w3schools.com/tags/tag_progress.asp-->
+<!--progress bar tutorial: https://www.w3schools.com/tags/tag_progress.asp-->
 <head>
     <title>deepLID</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
@@ -8,12 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <h1>deepLID - Demo</h1>
+    <h1>Language Identification - Demo</h1>
+    <p>This programm tries to identify the spoken language. Either <b>German, French, or English</b>.</p>
     <button id="recorder">Start Recording</button>
     <button id="uploader">Upload Recording</button>
     <progress id="bar" value="0" max="100"></progress>
     <div id="audio_container"></div>
     <div id="pred_container"></div>
+    <ol>
+      <li>Think about something to say. It can be anything, but please speak clearly.</li>
+      <li>Start the 5s recording. The website first ask for access to the microphone of your device.</li>
+      <li>Upload it and recieve a prediction.</li>
+    </ol>
+    <p><i>(Not every device is compatible)</i></p>
     <script src="{{ url_for('static', filename='RecordRTC.js') }}"></script>
     <script src="{{ url_for('static', filename='record.js') }}"></script>
 </body>

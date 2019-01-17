@@ -5,6 +5,9 @@ name = "pypi"
 
 [dev-packages]
 youtube_dl = "*"
+comet-ml = "*"
+notebook = "*"
+matplotlib = "*"
 
 [packages]
 Flask = "*"
@@ -12,14 +15,10 @@ Keras = "*"
 librosa = "*"
 kapre = "*"
 SoundFile = "*"
-ipykernel = "*"
-seaborn = "*"
 numpy = "==1.14.5"
-"e043c5a" = {path = "/home/paperspace/tensorflow/tensorflow-1.10.1-cp36-cp36m-linux_x86_64.whl"}
-notebook = "*"
-comet-ml = "*"
 pillow = "*"
 keras-contrib = {git = "https://www.github.com/keras-team/keras-contrib.git"}
+tensorflow = "*"
 
 [requires]
 python_version = "3.6"
