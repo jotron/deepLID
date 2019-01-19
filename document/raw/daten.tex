@@ -68,7 +68,7 @@ Die Prozedur dem Algorithmus bereits vorgerechnete Werte zu füttern, heisst \te
 		     \textit{(unten)} Mel Dezibel-Spectrogramm}
 	\label{img:preprocessing}
 \end{figure}
-Spektrogramme \index{Spektrogramme}sind grafische Darstellungen eines Hörsignals nach der Anwendung der Fourrier-Transformation\parencite[]['Spectrograms']{fourrier}, ersichtlich in Abbildung \ref{img:preprocessing} \textit{(Mitte)}. Frequenzen über 10kHz können abgeschnitten werden, da menschliche Sprache grösst Teils darunter abläuft \parencite{tenkHz}. Im Spektrogramm lassen sich von Auge Muster erkennen und unterscheiden. Daraus folgt die Idee für die Klassifizierung Bilderkennungsmethoden zu verwenden. Der visuelle Charakter der Spektrogramme erlaubt zum Beispiel das verwenden von \textit{2D Convolutional Neural Networks}.
+Spektrogramme \index{Spektrogramme}sind grafische Darstellungen eines Hörsignals nach der Anwendung der Fourrier-Transformation\parencite[]['Spectrograms']{fourrier}, ersichtlich in Abbildung \ref{img:preprocessing} \textit{(Mitte)}. Die Lautstärke der Frequenzen wird in die Logarithmische Dezibell-Skala umgerechnet. Es hat sich empirisch gezeigt, dass die Wahl der Dezibell-Skala einen positiven Effekt auf die Modelle hat. Frequenzen über 10kHz können abgeschnitten werden, da menschliche Sprache grösst Teils darunter abläuft \parencite{tenkHz}. Im Spektrogramm lassen sich von Auge Muster erkennen und unterscheiden. Daraus folgt die Idee für die Klassifizierung Bilderkennungsmethoden zu verwenden. Der visuelle Charakter der Spektrogramme erlaubt zum Beispiel das verwenden von \textit{2D Convolutional Neural Networks}.
 
 \subsubsection{Mel Filtering} \index{Mel Filtering}
 

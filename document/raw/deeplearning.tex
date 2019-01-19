@@ -8,24 +8,44 @@ Die Begriffe \textit{Deep Learning}, \textit{maschinelles Lernen} und \textit{k�
 	\label{img:hierarchy}
 \end{figure}
 
-Das Gebiet der künstlichen Intelligenz gibt es schon so lange wie den Computer selbst. Die Frage, wie schlau ein Computer werden kann, beschäftigt uns bis heute. Als anerkannte Definition für KI gilt, das Bestreben intellektuelle Aufgaben, die normalerweise von Menschen gelöst werden, zu automatisieren.\index{Künstliche Intelligenz (KI)}
+Das Gebiet der künstlichen Intelligenz gibt es schon so lange wie den Computer selbst. Die Frage, wie schlau ein Computer werden kann, beschäftigt uns bis heute. Als anerkannte Definition für KI gilt, das Bestreben intellektuelle Aufgaben, die normalerweise von Menschen gelöst werden, zu automatisieren \parencite[][Kap. 1.1.1]{chollet}.\index{Künstliche Intelligenz (KI)}
 
-Erste Erfolge erreichte man zum Beispiel mit Schachcomputern, die handgeschriebene Regeln befolgten. Diese Form von künstlicher Intelligenz hat aber schnell Grenzen, da viele Prozesse schlicht zu komplex sind, um sie unter angemessenem Aufwand mit Regeln zu beschreiben. Um dieses Problem zu lösen, erfand man maschinelles Lernens. \index{Maschinelles Lernen}
+Erste Erfolge erreichte man zum Beispiel mit Schachcomputern, die handgeschriebene Regeln befolgten. Diese Form von künstlicher Intelligenz hat aber schnell Grenzen, da die Lösungen vieler Prozesse schlicht zu komplex sind, um sie unter angemessenem Aufwand mit Regeln zu beschreiben. Mit der Zeit verbreitete sich darum eine neue Methode: Maschinelles Lernen.\index{Maschinelles Lernen} \parencite[vgl. ][Kap. 1.1.1]{chollet}
 
-Der Ablauf von maschinellem Lernen ist grundlegend anders als konventionelles Programmieren. Der Entwickler muss  keinen Programmcode mit festen Regeln schreiben, im Gegenteil: Er liefert dem Computer Eingabe und Ausgabe, und der Computer lernt die Regeln selbst. Kurzgesagt lernt das System aus Beispielen Muster zu erkennen. Maschinelles Lernen blühte erst in den 90'er Jahren auf, wurde aber schnell zum grössten Teilgebiet der künstlichen Intelligenz.
+Der Ablauf von maschinellem Lernen ist grundlegend anders als konventionelles Programmieren. Der Entwickler muss keinen Programmcode mit festen Regeln schreiben, im Gegenteil: Er liefert dem Computer Trainigsdaten, und der Computer lernt die Regeln selbst. Die bekannteste Kategorie von Machine Learning Algorithmen ist \textit{Überwachtes Lernen}. Bei überwachtem Lernen bestehen die Trainingsdaten aus Eingaben $x$ und zugehörigen Ausgaben $y$. Der Algorighmus versucht die Abbildungsfunktion $f$ zwischen den Eingaben und den Ausgaben zu bestimmen. 
+$$ y = f(x)$$
+Der Name \textit{Überwachtes Lernen} kommt daher, dass man sich den Lernalgorithmus wie einen Lehrer vorstellen kann der die Abbildungsfunktion überwacht. Die korrekten Ausgaben zu den Eingaben sind bekannt. Die Abbildungsfunktion berechnet iterativ Ausgaben zu den Trainingsdaten und der Lernalgorithmus korrigiert ihn mit den Lösungen. Der Lernprozess hört auf sobald die Abbildungsfunktion soviel wie möglich gelernt hat. Kurzgesagt lernt das System aus Beispielen Muster zu erkennen. Dieser Prozess wird \textit{Training} genannt. Maschinelles Lernen blühte erst in den 90'er Jahren auf, wurde aber schnell zum grössten Teilgebiet der künstlichen Intelligenz. \parencite[vgl. ][Kap. 1.1.2]{chollet} \parencite[vgl. ][]{supervised}
 
-Beim maschinellem Lernen, lernt die Software im Grunde eine nützlichere Darstellungsweise der Daten bzw. der Eingabe. Anhand dieser anderen Darstellungsweise kann der Computer die Antwort einfach erkennen. Wenn der Computer stufenweise nützlichere Repräsentationen bestimmt, kann er zunehmend komplexe Probleme, in einfacheren Zwischenschritten lösen. Genau das ist \textit{Deep Learning}. Das \textit{Deep} entspringt der grossen Anzahl an aufeinanderfolgenden Repräsentation. Deep Learning bezeichnet das Konzept von stufenweisem Lernen und nicht eine Methode selbst. Eine weit verbreitete Methode sind allerdings \textit{tiefe künstliche neuronale Netze}.\parencite[vgl.][]{chollet} \index{Deep Learning}
+Beim maschinellem Lernen, lernt die Software im Grunde eine nützlichere Darstellungsweise der Daten bzw. der Eingabe. Anhand dieser anderen Repräsentation kann der Computer die Antwort einfach erkennen. Abbildung \ref{img:repr} zeigt als Beispiel  zwei unterschiedliche Repräsentationen von Daten. Um zwischen roten und blauen Elementen zu unterscheiden ist Repräsentation (c) eindeutig praktischer als (a). Um bei (c) zwischen roten und blauen Elementen zu unterscheiden gilt einfach: Falls $x>0$ ist das Element blau und sonst ist es rot. Bei Deep Learning gehen die Daten durch eine Folge von aufeinander aufbauenden Repräsentationen. Jede Repräsentation ist ein wenig nützlicher um das Problem zu lösen als die Vorherige.  Auf diese Weise kann der Computer zunehmend komplexe Probleme, in einfacheren Zwischenschritten lösen. Das \textit{Deep} in Deep Learning entspringt der grossen Anzahl an aufeinanderfolgenden Repräsentationen. Die Verbindung zwischen Deep Learning und überwachtem Lernen ist, dass Deep Learning eine Kategorie von Abbildungsfunktionen beschreibt. Deep Learning bezeichnet das Konzept von stufenweisem Lernen und nicht eine einzelne Methode.  Eine weit verbreitete Methode sind allerdings \textit{tiefe künstliche neuronale Netze}. \parencite[vgl.][]{chollet} \index{Deep Learning}
+
+\begin{figure}[hbt]
+	\centering
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=0.9\textwidth]{assets/repr_0.png}
+		\caption{Rohe Daten}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=0.9\textwidth]{assets/repr_1.png}
+		\caption{Koordinatenwechsel}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=0.9\textwidth]{assets/repr_2.png}
+		\caption{Bessere Repräsentation}
+	\end{subfigure}
+	\caption{Unterschiedliche Repräsentationen}
+	\label{img:repr}
+\end{figure}
 
 \subsection{Künstliche neuronale Netze}
 
 \textit{Künstliche neuronale Netze} \index{Künstliche neuronale Netze}hat man sich, wie der Name schon preisgibt, von der Natur abgesehen. Ähnlich wie in unserem Gehirn gibt es Neuronen bzw. Knoten und dazwischenliegende Verbindungen. Die \say{Intelligenz} entsteht erst aus dem Zusammenspiel tausender Neuronen. Künstliche Neurone Netze haben sich mittlerweile so stark weiterentwickelt, dass sie nebst der ursprünglichen Idee, nichts mehr mit der biologischen Variante gemeinsam haben. \\
 
-Der Wert eines Knotens/Neurons ist abhängig von der Summe aller seiner eingehenden Verbindungen. Die Abhängigkeit wird duch die Aktivierungsfunktion $\sigma$ definiert. Die Aktivierungssfunktion ist wichtig, damit das Netzwerk jede mögliche Funktion abbilden kann. Es ist bewiesen dass neuronalen Netze universelle Approximatoren sind\parencite[][Kap. 4]{universal}. Eine bekannte Aktivierungsfunktion ist zum Beispiel die \textit{ReLU} \index{ReLU}Funktion. Die ReLU Funktion unterdrückt negative Werte, bzw. sie ist null für Werte kleiner als null.   \parencite{neuronale_netze} 
+Der Wert eines Knotens/Neurons ist abhängig von der Summe aller seiner eingehenden Verbindungen. Was der Wert einer Verbindung ist wird weiter unter erklärt. Die Abhängigkeit von der Summe wird durch die Aktivierungsfunktion $\sigma$ definiert. Die Aktivierungssfunktion ist wichtig, damit das Netzwerk jede mögliche Funktion abbilden kann. Es ist bewiesen dass neuronalen Netze universelle Approximatoren sind \parencite[][Kap. 4]{universal}. Eine bekannte Aktivierungsfunktion ist zum Beispiel die \textit{ReLU} \index{ReLU}Funktion. Sie wird vor allem geschätzt für ihre Simplizität. Die ReLU Funktion unterdrückt negative Werte, bzw. sie ist null für Werte kleiner als null. \parencite[vgl.][]{neuronale_netze}  \parencite[vgl.][]{chollet}
 $$\sigma(x) = \text{ReLU}(x) = \text{max}(0, x)$$
 
-Der Wert einer eingehenden Verbindung ist proportional zum Wert des Herkunfsknoten, bzw. des Knoten woher die Verbindung kommt. Der Wert des Herkunfsknoten wird multipliziert mit dem Gewicht der Verbindung: $w$. Die Gewichte der Verbindungen sind die Parameter des Netzwerks. Intuitiv kann man sich vorstellen, dass das Netzwerk lernt, wichtigeren Verbindungen grössere Gewichte zuzuordnen und Unwichtigen umgekehrt. Wenn man alles zusammensetzt ergibt sich für den Wert irgendeinen Knotens $o_i$ mit Vorgänger-Knoten $\boldsymbol{h}$ diese Formel:
+Der Wert einer eingehenden Verbindung entspricht dem Produkt des Herkunftsknoten, bzw. des Knoten woher die Verbindung kommt, und dem Gewicht $w \in \rm I\!R$ der Verbindung. Die Gewichte der Verbindungen sind die Parameter des Netzwerks. Intuitiv kann man sich vorstellen, dass das Netzwerk lernt, wichtigeren Verbindungen grössere Gewichte zuzuordnen und Unwichtigen umgekehrt. Wenn man alles zusammensetzt ergibt sich für den Wert irgendeinen Knotens $o_i$ mit Vorgänger-Knoten $\boldsymbol{h}$ diese Formel:
 $$ o_i = \sigma\Big(\sum_i h_i \cdot w_{i}\Big)$$
-Mit dieser Formel propagieren sich die Werte der Anfangsknoten durch das ganze Netzwerk. Um das Prinzip anschaulicher zu machen, wird ein Beispiel-Durchlauf vorgeführt. Die verwendeten Gewichte und Eingaben sind willkürlich.
+Die fettgedruckte Notation bedeutet, dass ein Vektor gemeint ist. Normal geschriebene Buchstaben mit Index bezeichnen die Komponenten des Vektors. Mit dieser Formel propagieren sich die Werte der Anfangsknoten durch das ganze Netzwerk. Um das Prinzip anschaulicher zu machen, wird ein Beispiel-Durchlauf vorgeführt. Die verwendeten Gewichte und Eingaben sind willkürlich.
 
 Die Aufgabe des vorgestellten Netzwerks ist es zum Beispiel, zwischen Hund und Katze zu unterscheiden. Die Eingaben $x_1$ und $x_2$ sind gewisse Merkmale des zu erkennenden Tieres. $1$ bedeutet, dass Tier besitzt das Attribut und $0$ das Gegenteil. Die Ausgabe $o$ beschreibt die Wahrscheinlichkeit, dass das Tier eine Katze ist. Daraus folgt, dass Werte $o>0.5$ für Katze stehen und Werte $o<0.5$ für Hunde.
 \begin{figure}[hbt]
@@ -34,15 +54,17 @@ Die Aufgabe des vorgestellten Netzwerks ist es zum Beispiel, zwischen Hund und K
 	\caption{Grafische Darstellung eines künstlichen neuronalen Netzwerks anhand eines Beispiels: Rote Zahlen sind festgesetzt und grüne Zahlen werden berechnet.}
 	\label{img:neuralnet}
 \end{figure}
-
-Was bis jetzt berechnet wurde nennt man den \textit{Vorwärtspass}. Aus einer Eingabe wurde die Ausgabe berechnet. Daran war aber noch nichts intelligent. Erst jetzt können die Parameter der Funktion, die Gewichte, aus diesem Beispiel lernen (Siehe Abbildung \ref{img:anatomy}). Um diese zu verbessern braucht es eine \textit{Verlust Funktion} \index{Verlust Funktion}die uns angibt, wie weit die Ausgabe vom korrekten Ziel entfernt ist. Eine mögliche Verlust Funktion ist die absolute Differenz zwischen dem Ziel und der Ausgabe. Wenn man in oberen Beispiel davon ausgeht, dass die Eingabe wirklich zu einer Katze gehört, ergäbe sich:
+\\
+Die versteckte Schicht ist wichtig damit das Netzwerk eine grössere Anzahl Paramter aus den Daten lernen kann. Je mehr versteckte Schichten es gibt, desto schwierigere Probleme kann das Netzwerk in der Regel lösen. Die Werte jeder versteckten Schichten können als neue Repräsentation der Eingabedaten interpretiert werden. Die Wahl von drei versteckten Knoten im Beispiel ist willkürlich.
+\\
+Was bis jetzt berechnet wurde nennt man den \textit{Vorwärtspass}. Aus einer Eingabe wurde die Ausgabe berechnet. Daran war aber noch nichts intelligent. Erst jetzt können die Parameter der Funktion, die Gewichte, aus diesem Beispiel lernen (Siehe Abbildung \ref{img:anatomy}). Um diese zu verbessern braucht es eine \textit{Verlustfunktion} \index{Verlust Funktion}die uns angibt, wie weit die Ausgabe vom korrekten Ziel entfernt ist. Eine mögliche Verlustfunktion ist die absolute Differenz zwischen dem Ziel und der Ausgabe. Wenn man in oberen Beispiel davon ausgeht, dass die Eingabe wirklich zu einer Katze gehört, ergäbe sich:
 $$ \text{Verlust}(output, target) = |target-output| = |1.0-0.747| = 0.253$$
 Um den Verlustwert zu minimieren, passt das Netzwerk die Gewichte schrittweise an. Diesen Teil übernimmt der  \textit{Optimierer}. Ein einfacher Optimierer ist zum Beispiel das Gradientenverfahren. Details dazu befinden sich in \parencite{gradient}.
 
 \begin{figure}[hbt]
 	\centering
 		\includegraphics[width=0.8\textwidth]{assets/anatomy.png}
-	\caption{Visuelle Darstellung des Lern-Prozesses anhand eines Beispiels}
+	\caption{Visuelle Darstellung des Lernprozesses anhand eines Beispiels}
 	\label{img:anatomy}
 \end{figure}
 
@@ -94,4 +116,4 @@ Der Vorgang lässt sich grafisch über die Zeit aufgerollt darstellen (Abbildung
 \end{figure}
 
 Das ganze Prinzip ergibt jedoch nur Sinn, wenn frühere Eingaben tatsächlich einen Einfluss auf spätere Ausgaben haben. Eine praktische Anwendung ist das Verarbeiten von zeitlichen Sequenzen wie Wetterdaten und Sprache. Die einzelnen Lernbeispiele werden  zeitlich zerteilt und stückweise dem Netzwerk gefüttert.
-Eine fortgeschrittene Implementation von RNN Zellen ist unter anderem die \textit{Long short-tem memory} (LSTM) Zelle \parencite{schmidhuber}. Durch das Einführen von unterschiedlichen wiederkehrenden Verbindungen wird verhindert, dass ältere Signale langsam verschwinden, bzw. vergessen werden \parencite{chollet}.
+Eine fortgeschrittene Implementation von RNN Zellen ist unter anderem die \textit{Gated recurrent unit} (GRU)\parencite{gru}. Durch das Einführen von unterschiedlichen wiederkehrenden Verbindungen wird verhindert, dass ältere Signale langsam verschwinden, bzw. vergessen werden \parencite{chollet}.
