@@ -4,20 +4,28 @@ Im folgenden Teil werden die entwickelten Deep Learning Modelle vorgestellt. Fü
 Insgesamt werden drei grundsätzlich verschiedene Neuronalen Netzwerk Architekturen vorgestellt. Die ersten zwei Modelle sind Convolutional Neural Networks während das dritte Modell eine Kombination zwischen CNN und Recurrent Neural Network ist. Jedes Modell endet mit einer Ausgabeschicht der Grösse drei. Jeder der der drei Werte steht für die Wahrscheinlichkeit einer Sprache. Um zu garantieren, dass die Summe der Werte 1 gibt wird die Aktivierungsfunktion \textit{softmax} verwendet:
 $$ \text{softmax}(\boldsymbol x)_i = \frac{\text{exp}(x_i)}{\sum_{j=0}^{n} \text{exp}(x_j)}$$
 Beispiel: 
-$$ \text{softmax}(\begin{bmatrix} 0.5 & 0.8 & 0.3\end{bmatrix}) = \begin{bmatrix} 0.32 & 0.43 & 0.26\end{bmatrix} = \begin{bmatrix} p_{FR} & p_{EN} & p_{DE}\end{bmatrix}$$
-Die Funktion eignet sich generell für Klassifizierung, denn sie bildet die Werte auf eine Wahrscheinlichkeitsverteilung über die berechneten Ausgabeklassen ab \parencite[][S. 180-184]{goodfellow}. Der Wert einer Ausgabeklasse lässt sich auf diese Weise als die Wahrscheinlichkeit, dass die Eingabe zu ihm gehört, interpretieren. Für alle anderen Schichten wird immer die Aktivierungsfunktion \textit{ReLU} verwendet.
+$$ \text{softmax}(\begin{bmatrix} 0.5 & 0.8 & 0.3\end{bmatrix}) = \begin{bmatrix} 0.31 & 0.43 & 0.26\end{bmatrix} = \begin{bmatrix} p_{FR} & p_{EN} & p_{DE}\end{bmatrix}$$
+Die Funktion eignet sich generell für Klassifizierung, denn sie bildet die Werte auf eine Wahrscheinlichkeitsverteilung über die berechneten Ausgabeklassen ab \parencite[][S. 180-184]{goodfellow}. Der Wert einer Ausgabeklasse lässt sich auf diese Weise als die Wahrscheinlichkeit $p_{X}$ interpretieren: Die Wahrscheinlichkeit, dass die Eingabe in der Sprache X ist. Für alle anderen Schichten wird immer die Aktivierungsfunktion \textit{ReLU} verwendet.
 \\
-Damit die Ziele des Netzwerks die gleichen Anzahl Dimensionen wie die Ausgaben haben, werden sie \textit{One-hot}\parencite{chollet} kodiert. Das bedeutet, dass die richtige Sprache die Wahrscheinlichkeit 1.0 besitzt und alle anderen 0. Das Ziel für eine französische Aufnahme ist also $\begin{bmatrix} 1.0 & 0.0 & 0.0\end{bmatrix}$, für eine englische Aufnahme $\begin{bmatrix} 0.0 & 1.0 & 0.0\end{bmatrix}$, etc.. Obwohl die Ziele die gleiche Form wie die Ausgaben haben lässt sich der Verlustwert nicht so leicht berechnen wie beim Anfangsbeispiel. Die Standard Verlustfunktion in diesem Fall ist \textit{Categorical Crossentropy}\parencite{chollet}. Für das Ziel $\boldsymbol{p}$ und die Voraussage $\boldsymbol{\hat{p}}$ ist die Funktion folgendermassen definiert:
+Damit die Ziele des Netzwerks die gleichen Anzahl Dimensionen wie die Ausgaben haben, werden sie \textit{One-hot}\parencite{chollet} kodiert. Das bedeutet, dass die richtige Sprache die Wahrscheinlichkeit 1.0 besitzt und alle anderen 0. Das Ziel für eine französische Aufnahme ist also $\begin{bmatrix} 1.0 & 0.0 & 0.0\end{bmatrix}$, für eine englische Aufnahme $\begin{bmatrix} 0.0 & 1.0 & 0.0\end{bmatrix}$, etc.. Obwohl die Ziele die gleiche Form wie die Ausgaben haben lässt sich der Verlustwert nicht so leicht berechnen wie beim Anfangsbeispiel. Die standard Verlustfunktion in diesem Fall ist \textit{Categorical Crossentropy}\parencite{chollet}. Für das Ziel $\boldsymbol{p} \in \mathbb{R}^n$ und die Voraussage $\boldsymbol{\hat{p}} \in \mathbb{R}^n$ ist die Funktion folgendermassen definiert:
 
-$$\text{H}(\boldsymbol{p}, \hat{\boldsymbol{p}}) = -\sum\limits_{i} p_i \cdot \log \hat{p_i}$$
+$$H(\boldsymbol{p}, \hat{\boldsymbol{p}}) = -\sum\limits_{i} p_i \cdot \log \hat{p_i}$$
 \\
-Das diese Verlustfunktion sinnvoll ist, lässt sich intuitiv verstehen: Das Ziel des Netzes soll es sein, die Wahrscheinlichkeit der richtigen Sprache zu maximieren. So soll zum Beispiel bei $\boldsymbol{P}=\begin{bmatrix} 0 & 1.0 & 0\end{bmatrix}$ und $\boldsymbol{\hat{P}}=\begin{bmatrix} P_o & P_1 & P_2\end{bmatrix}$,  $ P_1$ maximiert werden. Die Wahrscheinlichkeit der richtigen Sprache lässt sich einfach berechnen:
-$$\text{L}(\boldsymbol{p}, \hat{\boldsymbol{p}}) = \sum\limits_{i} p_i \cdot \hat{p_i}$$
-Im Beispiel oben fallen $P_0$ und $P_2$ weg und $1\cdot P_1$ bleibt übrig, was genau der Wahrscheinlichkeit der richtigen Sprache entspricht. Ab hier lässt sich nachvollziehen, das genau wie wir $L$ maximieren wollen, $-L$ (wie der Verlustwert) minimiert werden soll. Da $\text{log}$ eine monotonische Funktion ist entspricht $\text{min}(p)$ auch $\text{min(log(}p))$. Das Resultat ist genau die Categorical Crossentropy. \parencite[vgl. ][]{entropy}
-$$\text{max}[\text{L}(\boldsymbol{p}, \hat{\boldsymbol{p}})] =\text{min}[-\text{L}(\boldsymbol{p}, \hat{\boldsymbol{p}})]$$
-$$\text{min}[-\text{L}(\boldsymbol{p}, \hat{\boldsymbol{p}})] =\text{min}[-\text{L}(\boldsymbol{p}, \text{log}(\boldsymbol{\hat{p}}))] = \text{H}(\boldsymbol{p}, \hat{\boldsymbol{p}})$$
-\\
-Die Parameter der Modelle, wie zum Beispiel die Grösse des Spektrogramms wurden empirisch bestimmt. Insgesamt wurden fast 200 Experimente durchgeführt. Allerdings konnte längst nicht jede mögliche Kombination von Parametern probiert werden, da jeder Durchlauf zeitaufwändig und nicht parallelisierbar ist.
+Dass diese Verlustfunktion sinnvoll ist, lässt sich intuitiv verstehen: Das Ziel des Netzes soll es sein, die Wahrscheinlichkeit der richtigen Sprache zu maximieren. So soll zum Beispiel bei $\boldsymbol{p}=\begin{bmatrix} 0 & 1.0 & 0\end{bmatrix}$ und $\boldsymbol{\hat{p}}=\begin{bmatrix} p_0 & p_1 & p_2\end{bmatrix}$,  $ p_1$ maximiert werden. Die Wahrscheinlichkeit der richtigen Sprache lässt sich einfach berechnen:
+$$L(\boldsymbol{p}, \hat{\boldsymbol{p}}) = \sum\limits_{i} p_i \cdot \hat{p_i}$$
+Im Beispiel oben fallen $P_0$ und $P_2$ weg und $1\cdot P_1$ bleibt übrig, was genau der Wahrscheinlichkeit der richtigen Sprache entspricht. Ab hier lässt sich nachvollziehen, das genau wie wir $L$ maximieren wollen, $-L$ (wie der Verlustwert) minimiert werden soll. Da $\text{log}$ eine monoton steigende Funktion ist, ist $f(x)$ an der gleichen Stelle minimal wie $f(\log x)$. Was folgt ist genau die Categorical Crossentropy. Kurzgesagt sind die Parameter des Netzwerk die selben wenn $H$ minimiert oder $L$ maximiert wird: \parencite[vgl. ][]{entropy}
+\begin{align*}
+\shortintertext{Sei $X\in \mathbb{R}^n$ alle Parameter des Netzwerks so dass}
+   L(\boldsymbol{p}(X), \boldsymbol{\hat{p}}) &= \max\limits_x\{L(\boldsymbol{p}(x), \boldsymbol{\hat{p}})\}
+\shortintertext{folgt, dass}
+-L(\boldsymbol{p}(X), \boldsymbol{\hat{p}}) &= \min\limits_x\{-L(\boldsymbol{p}(x), \boldsymbol{\hat{p}})\}
+\shortintertext{und daraus folgt, dass}
+-L(\boldsymbol{p}(X), \log\boldsymbol{\hat{p}}) &= \min\limits_x\{-L(\boldsymbol{p}(x), \log\boldsymbol{\hat{p}})\}\\
+H(\boldsymbol{p}(X), \boldsymbol{\hat{p}}) &= \min\limits_x\{H(\boldsymbol{p}(x), \boldsymbol{\hat{p}})\}
+\end{align*} 
+
+
+Die Hyperparameter der Modelle, wie zum Beispiel die Grösse des Spektrogramms wurden empirisch bestimmt. Insgesamt wurden fast 200 Experimente durchgeführt. Allerdings konnte längst nicht jede mögliche Kombination von Hyperparametern probiert werden, da jeder Durchlauf zeitaufwändig und nicht parallelisierbar ist.
 \begin{figure}[hbt]
 	\centering
 		\includegraphics[width=0.8\textwidth]{assets/modelflow.png}
@@ -73,10 +81,10 @@ Das bedeutet, dass dem Verlustwert zusätzlich das Quadrat der Gewichte addiert 
 \subsection{Implementierung}
 
 Was in dieser Arbeit theoretisch gemacht wurde, wurde bis hierhin ausführlich beschrieben. Die praktische Implementierung aller Schritte wurde aber noch nicht behandelt. Dieses Kapitel erklärt die genaue Umsetzung aller Teile und nennt die verwendeten Werkzeuge. In anderen Worten wird hier die praktische Arbeit anschaulich gemacht.
-Für alle Teile der Arbeit gilt, dass die Programmiersprache \textit{Python} ist. Python eignet sich generell für Deep Learning weil viele Bibliotheken für die Sprache geschrieben sind. Ausserdem hat Python den Vorteil, dass es einsteigerfreundlich ist. Python kann entweder als Script geschrieben werden, also als Datei die ausgeführt wird, oder in einem interaktiven \textit{Jupyter Notebook}\parencite{jupyter}. Jupyter Notebook's  bestehen unter anderem aus mehreren Textzellen die einzeln ausgeführt werden können aber den gleichen Thread teilen. Das macht Jupyter Notebooks unglaublich praktisch für das Experimentieren und Darstellen von Daten.
+Für alle Teile der Arbeit wird mir der Programmiersprache \textit{Python}  gearbeitet. Python eignet sich generell für Deep Learning weil viele Bibliotheken für die Sprache geschrieben sind. Ausserdem hat Python den Vorteil, dass es einsteigerfreundlich ist. Python kann entweder als Script geschrieben werden, also als Datei die ausgeführt wird, oder in einem interaktiven \textit{Jupyter Notebook}\parencite{jupyter}. Jupyter Notebook's  bestehen unter anderem aus mehreren Textzellen die einzeln ausgeführt werden können aber den gleichen Thread teilen. Das macht Jupyter Notebooks unglaublich praktisch für das Experimentieren und Darstellen von Daten.
 \\ \\
-Die Arbeit lässt sich in vier Teile gliedern. Abbildung \ref{img:vorgehen} zeigt die Teile schematisch. 
-Als erstes müssen die zu verwendeten Daten aus den verschiedenen Quellen gesammelt werden. Bevor die Daten aber heruntergeladen werden muss in manchen Fällen eine Selektion geschehen. So kann bei Youtube aufgrund der riesigen Anzahl an verfügbaren Videos unmöglich die gesamte Datenmenge gesammelt werden. Aus diesem Grund wurde bei Youtube manuell nach geeigneten Kanälen bzw. Playlists gesucht. Nach dem klar ist was gesammelt werden soll kann man mit Herunterladen starten. Dafür werden Python-Scripts geschrieben die die beträchtliche Menge Daten automatisiert herunterladen. Für die YouTube Daten wird die externe Bibliothek \textit{Youtube-dl}\parencite{youtube-dl} benutzt.
+Die Aufgabe lässt sich in vier Teile gliedern. Abbildung \ref{img:vorgehen} zeigt die Teile schematisch. 
+Als erstes müssen die zu verwendeten Daten aus den verschiedenen Quellen gesammelt werden. Bevor die Daten aber heruntergeladen werden muss in manchen Fällen eine Selektion geschehen. So kann bei Youtube aufgrund der riesigen Anzahl an verfügbaren Videos unmöglich die gesamte Datenmenge gesammelt werden. Aus diesem Grund wurde bei Youtube manuell nach geeigneten Kanälen bzw. Playlists gesucht. Nach dem klar ist was gesammelt werden soll kann man mit dem Herunterladen starten. Dafür werden Python-Scripts geschrieben die die beträchtliche Menge Daten automatisiert herunterladen. Für die YouTube Daten wird die externe Bibliothek \textit{Youtube-dl}\parencite{youtube-dl} benutzt.
 
  \begin{figure}[hbt]
 	\centering
@@ -113,9 +121,9 @@ Die Modelle werden separat an allen drei Datenquellen ausgewertet. Für jedes Da
 \end{table}
 Das CRNN führt mit fast 97\%, dicht gefolgt vom CNN. Das MobileNet besitzt eine mehr als 10\% tiefere Genauigkeit. Obwohl der Unterschied zwischen CRNN und CNN absolut klein erscheint, ist er relativ zum Fehler beträchtlich. Das CRNN hat eine mehr als 30\% kleinere Fehlgenauigkeit als das CNN.
 \\ 
-Die Genauigkeiten am Youtube Testset sind in Tabelle \ref{table:test_you} geschrieben. Sämtliche Modelle haben am Youtube Testset eine tiefere Genauigkeit als am Voxforge Testset. Das MobileNet vollzieht mit einem Verlust von 5.9\% Genauigkeit den grössten Fall. Das CNN und CRNN besitzen beide eine Genauigkeit von 94.7\%.
+Die Genauigkeiten am Youtube Testset zeigt Tabelle \ref{table:test_you}. Sämtliche Modelle haben am Youtube Testset eine tiefere Genauigkeit als am Voxforge Testset. Das MobileNet vollzieht mit einem Verlust von 5.9\% Genauigkeit den grössten Fall. Das CNN und CRNN besitzen beide eine Genauigkeit von 94.7\%.
 \\
-Die bisherigen Resultate zeigen, dass das CRNN insgesamt die höchste Genauigkeit hat. Trotzdem heisst das nicht, dass das CRNN in jedem Fall besser ist als die anderen beiden Modelle. Der Beweis dafür ist eine Kombination aller Modelle oft besser ist als die einzelnen Modelle. Ein Modell berechnet aus dem Durchschnitt der drei Modelle erreicht bei Voxforge eine Genauigkeit von 97.9\%. Das bedeutet eine erneute Verkleinerung der Fehlgenauigkeit um mehr als 30\%.
+Die bisherigen Resultate zeigen, dass das CRNN insgesamt die höchste Genauigkeit hat. Trotzdem heisst das nicht, dass das CRNN in jedem Fall besser ist als die anderen beiden Modelle. Der Beweis dafür ist, dass eine Kombination aller Modelle oft besser ist, als die einzelnen Modelle. Ein Modell berechnet aus dem Durchschnitt der drei Modelle erreicht bei Voxforge eine Genauigkeit von 97.9\%. Das bedeutet eine erneute Verkleinerung der Fehlgenauigkeit um mehr als 30\%.
 \begin{table}[h]
 	\centering
 	\begin{tabular}{llll}
@@ -129,7 +137,7 @@ Die bisherigen Resultate zeigen, dass das CRNN insgesamt die höchste Genauigkei
 	\label{table:test_you}
 \end{table}
 \\
-Das CRNN hat zwar die höchste einzelne Genauigkeit aber das kommt mit einem Preis in Form der Trainingsdauer. Das CRNN braucht mehr als drei mal so lang zu trainieren wie das CNN. Das Genauigkeit/Zeit Verhältnis des CNN ist bedeutend grösser als das des CRNN. Die Trainingszeiten sind in Tabelle \ref{table:test_time} aufgetragen.
+Das CRNN hat die höchste einzelne Genauigkeit zum Preis einer langen Trainingsdauer. Das CRNN braucht mehr als drei mal so lang zum trainieren wie das CNN. Das Genauigkeit/Zeit Verhältnis des CNN ist bedeutend grösser als das des CRNN. Die Trainingszeiten sind in Tabelle \ref{table:test_time} aufgetragen.
 \begin{table}[h]
 	\centering
 	\begin{tabular}{lll}
@@ -143,9 +151,9 @@ Das CRNN hat zwar die höchste einzelne Genauigkeit aber das kommt mit einem Pre
 	\label{table:test_time}
 \end{table}
 \\
-Eine weitere Methode neben der Genauigkeit um die Modelle auszuwerten ist ein Wahrheitsmatrix aufzustellen. Die Reihen der Matrix entsprechen der Sprache der Aufnahmen während die Spalten die berechnete Antwort des Algorithmus unterscheiden. Das Feld oben links zeigt zum Beispiel die Anzahl Aufnahmen die Französisch sind und als Französisch klassifiziert wurden. Die Wahrheitsmatrix gibt viel mehr Details her als die Genauigkeit alleine. Abbildung \ref{img:matrix_vox} zeigt die Matrix vom CRNN Modell an den kombinierten Testdaten von Youtube und Voxforge.
+Eine weitere Methode um neben der Genauigkeit die Modelle auszuwerten, ist eine Wahrheitsmatrix aufzustellen. Die Zeilen der Matrix entsprechen der Sprache der Aufnahmen, während die Spalten die berechnete Antwort des Algorithmus unterscheiden. Das Feld oben links zeigt zum Beispiel die Anzahl der französischen Aufnahmen die als Französisch klassifiziert wurden. Die Wahrheitsmatrix gibt zeigt somit mehr Details als die Genauigkeit alleine. Abbildung \ref{img:matrix_vox} zeigt die Matrix vom CRNN Modell an den kombinierten Testdaten von Youtube und Voxforge.
 \\
-Das interessante was an dieser Matrix ablesbar ist, ist dass das Modell Englisch und Deutsch relativ oft verwechselt. Französisch und Englisch werden ebenfalls öfter verwechselt als Französisch und Deutsch.
+Das interessante das an dieser Matrix ablesbar ist, ist dass das Modell Englisch und Deutsch relativ oft verwechselt: Englisch wird in 121 Fällen mit Deutsch verwechselt und Deutsch wird 122 mal dem Englischen verwechselt. Im Vergleich werden Französisch und Deutsch insgesamt nur in 67 Fällen verwechselt. Französisch und Englisch werden insgesamt 105 mal verwechselt.
  \begin{figure}[hbt]
 	\centering
 		\includegraphics[width=0.5\textwidth]{assets/matrix_voxyou_crnn.png}
@@ -154,9 +162,9 @@ Das interessante was an dieser Matrix ablesbar ist, ist dass das Modell Englisch
 \end{figure}
 
 \subsection{Auswertung an Librivox}
-Die Genauigkeit bei den Voxforge und Youtube Daten war serh hoch weil die Modelle die beiden Quellen bereits kannten. Obwohl das Testset unterschiedlich ist vom Trainingsset, teilen sie viele Gemeinsamkeiten. Die Librivox Daten sind den Modellen hingegen komplett fremd. Mit der Auswertung an den Librivox Daten wird klar wie gut das Modell generalisiert, bzw. wie gross die Stichprobenverzerrung ist.
+Die Genauigkeit bei den Voxforge und Youtube Daten war sehr hoch, weil die Modelle die beiden Quellen bereits kannten. Obwohl das Testset unterschiedlich vom Trainingsset ist,  teilen sie viele Gemeinsamkeiten. Die Librivox Daten sind den Modellen hingegen komplett fremd. Mit der Auswertung an den Librivox Daten wird klar, wie gut das Modell generalisiert, bzw. wie gross die Stichprobenverzerrung ist.
 \\
-Tabelle \ref{table:test_lib} zeigt die Genauigkeiten auf dem Librivox Testset. Das CNN verliert im Vergleich zu vorher rund 6\% Genauigkiet. Das CRNN hingegen erreicht immer noch 94.1\% Genauigkiet. Am schlimmisten geht es dem MobileNet, das auf eine Genauigkeit von 56.8\% sinkt. Anhand dieses Verlust lässt sich klar ablesen, dass das MobileNet sich an die Trainingsdaten überangepasst hat. Das CRNN und CNN auf der anderen Seite generalisieren überraschend gut.
+Tabelle \ref{table:test_lib} zeigt die Genauigkeiten auf dem Librivox Testset. Das CNN verliert im Vergleich zu vorher rund 6\% Genauigkeit. Das CRNN hingegen erreicht immer noch 94.1\% Genauigkeit. Am schlimmsten geht es dem MobileNet, das auf eine Genauigkeit von 56.8\% sinkt. Anhand dieses Verlust lässt sich klar ablesen, dass das MobileNet sich an die Trainingsdaten überangepasst hat. Das CRNN und CNN auf der anderen Seite generalisieren überraschend gut.
 \begin{table}[h]
 	\centering
 	\begin{tabular}{llll}
@@ -170,7 +178,7 @@ Tabelle \ref{table:test_lib} zeigt die Genauigkeiten auf dem Librivox Testset. D
 	\label{table:test_lib}
 \end{table}
 \\
-Genau wie bei Voxforge und Youtube lässt sich wieder eine Wahrheitsmatrix zu detaillierten Auswertung formen. Abbilunng \ref{img:matrix_lib} zeigt die Matrix des CRNN Modells. Das auffällige an dieser Matrix ist, dass Englisch relativ selten mit anderen Sprachen verwechselt wird. Deutsch und Französich werden hingegen oft fälschlicherweise als Englisch erkannt. 
+Genau wie bei Voxforge und Youtube lässt sich wieder eine Wahrheitsmatrix zu detaillierten Auswertung erstellen. Abbilung \ref{img:matrix_lib} zeigt die Matrix des CRNN Modells. Auffällig an dieser Matrix ist, dass Englisch relativ selten mit anderen Sprachen verwechselt wird. Deutsch und Französisch werden hingegen oft fälschlicherweise als Englisch erkannt. 
 \begin{figure}[hbt]
 	\centering
 		\includegraphics[width=0.5\textwidth]{assets/matrix_lib_crnn.png}

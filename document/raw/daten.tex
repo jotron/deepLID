@@ -2,7 +2,7 @@
 
 
 \subsection{Datenquellen}
-Es gibt keine frei zugänglichen umfassenden Datensets für Sprachidentifikation. Datensets wie das \textit{NIST Language Recognition Evaluation}\cite{nist} sind nur unter teuren Gebühren zugänglich. Wie verwandte Arbeiten empfehlen \cite{iLID}, wird darum ein eigenes Datenset zusammengestellt. Es werden gleichmässig Daten zu den Sprachen Deutsch, Englisch, und Französisch gesammelt. Die Daten stammen vom \textit{Voxforge}\cite{voxforge} Datenset, von \textit{Youtube}\cite{youtube} und von \textit{Librivox}\cite{librivox}.
+Es gibt keine frei zugänglichen umfassenden Datensets für Sprachidentifikation. Datensets, wie das \textit{NIST Language Recognition Evaluation}\cite{nist}, sind nur unter teuren Gebühren zugänglich. Wie verwandte Arbeiten empfehlen \cite{iLID}, wird darum ein eigenes Datenset zusammengestellt. Es werden gleichmässig Daten zu den Sprachen Deutsch, Englisch, und Französisch gesammelt. Die Daten stammen vom \textit{Voxforge}\cite{voxforge} Datenset, von \textit{Youtube}\cite{youtube} und von \textit{Librivox}\cite{librivox}.
 
 \paragraph{Voxforge} ist ein open-source Datenset für Spracherkennung. Es besteht aus vielen kurzen (1-10s), von Benutzern hochgeladenen, Audiodateien. Die englische Sprache dominiert mit rund 120h Audio das Datenset. Über alle drei Sprachen verteilt sind 190 Stunden Ton verfügbar. Die Audioqualität variiert je nach Benutzer.
 
@@ -26,9 +26,9 @@ Die Sprache ist langsam und deutlich verständlich. Sie hört sich eher künstli
 
 
 \subsection{Daten Auswahl}
-Die Modelle werden grundsätzlich mit den Daten von Voxforge und Youtube trainiert und ausgewertet. Es werden zwei unterschiedliche Datenquellen verwendet um die \textit{Stichprobenverzerrung} zu minimieren. Stichprobenverzerrung bedeutet, dass das Datenset nicht repräsentativ für alle Sprachaufnahmen ist. Bei Voxforge ist zum Beispiel die Gefahr, dass das Modell sich überanpasst an die geringe Anzahl Sprecher. Anstatt die Sprache zu erkennen, könnte das Modell das Mikrofon des Sprechers identifizieren und jedem Sprecher eine Sprache zuordnen. Die Leistung des Modells für neue Sprecher wäre dann nicht besser als ein Zufallsgenerator.
+Die Modelle werden grundsätzlich mit den Daten von Voxforge und Youtube trainiert und ausgewertet. Die Verwendung von zwei unterschiedlichen Datenquellen minimiert die \textit{Stichprobenverzerrung}. Stichprobenverzerrung bedeutet, dass das Datenset nicht repräsentativ für alle Sprachaufnahmen ist. Bei Voxforge ist zum Beispiel die Gefahr, dass das Modell sich an die geringe Anzahl Sprecher überanpasst . Anstatt die Sprache zu erkennen, könnte das Modell das Mikrofon des Sprechers identifizieren und jedem Sprecher eine Sprache zuordnen. Die Leistung des Modells für neue Sprecher wäre dann nicht besser als ein Zufallsgenerator.
 \\
-Um die Stichprobenverzerrung zu messen werden die Modelle zusätzlich auf dem Librivox Datenset ausgewertet. Die Daten von Librivox teilen keine systematischen \say{Fehler} wie zum Beispiel Sprecher mit den Trainingsdaten. Das Librivox-Testset besteht aus insgesamt 2 Stunden Aufnahmen.
+Um die Stichprobenverzerrung zu messen, werden die Modelle zusätzlich auf dem Librivox Datenset ausgewertet. Die Daten von Librivox teilen keine systematischen \say{Fehler} wie zum Beispiel Sprecher mit den Trainingsdaten. Das Librivox-Testset besteht aus insgesamt 2 Stunden Aufnahmen.
 \\
 Von Youtube und Voxforge werden gemeinsam 139 Stunden Audiodaten heruntergeladen, was 100'000 5s Aufnahmen entspricht. Die Datenmenge wird bewusst klein gehalten, weil grössere Datenmengen ressourcenaufwändiger und ineffizienter wären. Die einzelnen Sprachen und Quellen sind zu gleichen Teilen repräsentiert. 
 \\
@@ -59,16 +59,16 @@ Die Prozedur dem Algorithmus bereits vorgerechnete Werte zu füttern, heisst \te
 \subsubsection{Spektrogramme} \index{Spektrogramme}
 \begin{figure}[hbt]
 	\centering
-		\includegraphics[width=0.6\textwidth]{assets/audio_raw.png}
-		\includegraphics[width=0.6\textwidth]{assets/audio_log.png}
-		\includegraphics[width=0.6\textwidth]{assets/audio_mel.png}
+		\includegraphics[width=0.8\textwidth]{assets/audio_raw.png}
+		\includegraphics[width=0.8\textwidth]{assets/audio_linear.png}
+		\includegraphics[width=0.8\textwidth]{assets/audio_mel.png}
 	\centering
 	\caption{Audio-Preprocessing: \textit{(oben)} Rohe Schallwelle, \textit{(mitte)}
 		     Dezibel-Spectrogramm, 
 		     \textit{(unten)} Mel Dezibel-Spectrogramm}
 	\label{img:preprocessing}
 \end{figure}
-Spektrogramme \index{Spektrogramme}sind grafische Darstellungen eines Hörsignals nach der Anwendung der Fourrier-Transformation\parencite[]['Spectrograms']{fourrier}, ersichtlich in Abbildung \ref{img:preprocessing} \textit{(Mitte)}. Die Lautstärke der Frequenzen wird in die Logarithmische Dezibell-Skala umgerechnet. Es hat sich empirisch gezeigt, dass die Wahl der Dezibell-Skala einen positiven Effekt auf die Modelle hat. Frequenzen über 10kHz können abgeschnitten werden, da menschliche Sprache grösst Teils darunter abläuft \parencite{tenkHz}. Im Spektrogramm lassen sich von Auge Muster erkennen und unterscheiden. Daraus folgt die Idee für die Klassifizierung Bilderkennungsmethoden zu verwenden. Der visuelle Charakter der Spektrogramme erlaubt zum Beispiel das verwenden von \textit{2D Convolutional Neural Networks}.
+Spektrogramme \index{Spektrogramme}sind grafische Darstellungen eines Hörsignals nach der Anwendung der Fourrier-Transformation\parencite[]['Spectrograms']{fourrier}, ersichtlich in Abbildung \ref{img:preprocessing} \textit{(Mitte)}. Die Lautstärke der Frequenzen wird in die Logarithmische Dezibell-Skala umgerechnet. Die Einheit dBFS (\textit{Decibels relative to full scale}) gibt die Lautstärke relativ zur maximalen Lautstärke (0 dBFS) an. Es hat sich empirisch gezeigt, dass die Wahl der Dezibell-Skala einen positiven Effekt auf die Modelle hat. Frequenzen über 10kHz können abgeschnitten werden, da menschliche Sprache grösst Teils darunter abläuft \parencite{tenkHz}. Im Spektrogramm lassen sich mit dem Auge Muster erkennen und unterscheiden. Daraus folgt die Idee für die Klassifizierung Bilderkennungsmethoden zu verwenden. Der visuelle Charakter der Spektrogramme erlaubt zum Beispiel das verwenden von \textit{2D Convolutional Neural Networks}.
 
 \subsubsection{Mel Filtering} \index{Mel Filtering}
 
@@ -76,7 +76,7 @@ Spektrogramme haben relativ viele Datenpunkte und sind deshalb recht aufwändig 
 
 \subsubsection{Implementation}
 
-Die Oben genannten Transformationen können vor dem Training direkt auf die Daten angewendet und abgespeichert werden. In diesem Fall hätte man die rohen Daten löschen können. Allerdings sollte in dieser Arbeit sowohl an den rohen Daten wie auch an der Transformation flexibel experimentiert werden können, weswegen die Daten unbedingt beibehalten werden mussten. 
+Die oben genannten Transformationen können vor dem Training direkt auf die Daten angewendet und abgespeichert werden. Diese Prozedur müsste aber bei jedem Experiment mit neuen Hyperparametern für das Spektrogram, wiederholt werden. Um flexibel experimentieren zu können, mussten die Daten deswegen unbedingt in ihrer rohen Form bleiben. 
 
 Anstatt die Transformationen selber zu implementieren wird ein Framework verwendet. In diesem Fall bietet sich an \textit{kapre}\parencite{kapre} an. Mit Kapre lassen sich währende dem Training die Daten in Echtzeit verarbeiten. Das Training dauert dabei aber 20\% länger. Konkret verhält sich \textit{kapre} wie eine Schicht vor dem eigentlichen Neuronalen Netzwerk.
 \begin{figure}[hbt]
