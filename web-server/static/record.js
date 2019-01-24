@@ -114,7 +114,7 @@
     //Animate progress bar
     function progress_move() {
         var value = 0; // start: 0%
-        var id = setInterval(frame, 120); // every 120ms add 2% => total 5s
+        var id = setInterval(frame, 120); // every 120ms add 2% => total 6s
         function frame() {
             if (value >= 100) {
                 clearInterval(id);

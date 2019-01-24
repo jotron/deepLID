@@ -1,12 +1,11 @@
 ## List of models
 
-A list of hyperparamets can be found [here](potential_hyperparameters.md).
-
 Testset and valset are a mix of youtube and voxforge data.
 
 - #### berlin_net (test_acc=95.1%)
 
-  inspired from *Tom Herold, Thomas Werkmeister Paper; Shallow Architecture* with BN
+  see [README](berlin_net/README.md)
+  inspired from *Tom Herold, Thomas Werkmeister Paper; Shallow Architecture*
   
 - #### cGAN (failed)
   
@@ -19,7 +18,6 @@ Testset and valset are a mix of youtube and voxforge data.
 - #### conv1d (test_acc=86.9%)
 
   16, 32, 32, 64, 64, 64, Dense 512
-  -> depreciated
 
 - #### conv2d_to_conv1d (val_acc=90%)
 
@@ -28,13 +26,18 @@ Testset and valset are a mix of youtube and voxforge data.
 
 - #### conv2d_deep (test_acc=86.9%)
 
-  (multiple architectures, see in README)
-  idea: using dCNN like AlexNet, VGG and Resnet for LID
+  (multiple architectures, see in [README](conv2d_deep/README.md))
+  idea: using a deep CNN like AlexNet, VGG and Resnet for LID
   → overfits too much
 
 - #### conv2d_to_rnn (test_acc=94.7%)
 
-  (multiple architectures, see in README)
-  idea: using dCNN like AlexNet, VGG and Resnet for feature extraction, than a RNN for temporal analysis
+  (multiple architectures, see in [README](conv2d_to_rnn/README.md)
+  idea: using dCNN feature extractor, than a RNN for temporal analysis
+  
+## Help
 
-
+- *.h5* Files are saved Keras Models
+- *model_ens.h5* is the ensemble model made of belin_net, cnn and crnn. It performs better than the individual models.
+- A list of hyperparamets can be found [here](potential_hyperparameters.md).
+- Detailed Comments to common commands can be found [here](help.ipynb)

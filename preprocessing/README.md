@@ -1,8 +1,8 @@
 ## Preprocessing
 
-**Goal: ** Split all samples in 5s pieces (padding up to 1.5s). Save all pieces in big Dataset ready for training.
+**Goal:** Split all samples in 5s pieces (padding up to 1.5s). Save all pieces in big Dataset ready for training.
 
-### Distribution of processed data in *data\_100.hdf5*
+### Distribution of Training data
 
 TOTAL = 100'000 [5s samples]
 
@@ -23,4 +23,4 @@ TOTAL = 100'000 [5s samples]
 - 50'000 Youtube
 - 50'000 Voxforge
 
-### 
+\**Librixox is only used as testdata*

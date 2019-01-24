@@ -1,10 +1,12 @@
 {
+    // This json configuration is used when the webserver is launged as a background service with foreverjs tool."
+    // First install foreverjs with npm
+    // then type: forever start web-server/forever_conf.json
     "uid": "deeplid",
     "append": true,
     "watch": true,
     "command": "pipenv run python",
     "script": "web-server/webserver.py",
-    "sourceDir": "/home/joel/deepLID",
     "colors": true,
     "killTree": true,
     "LOGFILE": "deeplog.log"
