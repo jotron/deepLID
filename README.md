@@ -21,7 +21,6 @@ Online Demo at *https://jo.guru.xxx/deeplid*
   - Scripts to preprocess data
   - Jupyter notebooks with data analysis
 - **/webserver**
-  - see [preprocessing/README](web-server/README.md)
   - Minimalistic Flask Webserver
 
 
